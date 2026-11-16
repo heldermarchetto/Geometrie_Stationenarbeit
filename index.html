@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fit für die Klassenarbeit: Geometrie (Mathematik Klasse 5, DFU)</title>
+<style>
+:root{
+  --bg:#f6f1e7; --card:#fffdf8; --ink:#22303c; --mut:#6b7785; --line:#e2d9c8;
+  --acc:#1f6f78; --acc2:#f2a900; --ok:#2f9e44; --okbg:#e6f6ea; --err:#c92a2a; --errbg:#fdecec;
+  --k:#1c6fd1; --ms:#d6336c; --wh:#2f9e44; --mp:#e8590c; --par:#7048e8;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Avenir Next","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif}
+button,input,select{font:inherit;color:inherit}
+h1,h2,h3{line-height:1.2;margin:.2em 0 .5em}
+h1{font-size:1.7rem} h2{font-size:1.35rem} h3{font-size:1.1rem}
+#top{position:sticky;top:0;z-index:20;background:var(--acc);color:#fff;display:flex;align-items:center;gap:.6rem;padding:.5rem .9rem;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+#top .brand{font-weight:700;font-size:1.1rem;cursor:pointer;margin-right:auto;display:flex;align-items:center;gap:.4rem}
+#top .pill{background:rgba(255,255,255,.16);border-radius:99px;padding:.2rem .7rem;font-size:.92rem;white-space:nowrap}
+#top .pill.star{background:#fff;color:#7a5200;font-weight:700}
+#top button{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:99px;padding:.2rem .7rem;cursor:pointer;font-size:.9rem}
+main{max-width:1120px;margin:0 auto;padding:1rem .9rem 4rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.2rem;box-shadow:0 1px 3px rgba(60,40,0,.06)}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:12px;padding:.65rem 1.1rem;font-weight:600;cursor:pointer;min-height:46px}
+.btn:active{transform:translateY(1px)}
+.btn.sec{background:#fff;color:var(--acc);border:2px solid var(--acc)}
+.btn.small{min-height:38px;padding:.35rem .8rem;font-size:.95rem}
+.btn[disabled]{opacity:.45;cursor:default}
+.row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+.mut{color:var(--mut)} .en{color:var(--mut);font-style:italic;font-size:.92em}
+.crumb{display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;flex-wrap:wrap}
+.crumb h2{margin:0}
+/* Login */
+.login{max-width:560px;margin:1.5rem auto}
+.login label{display:block;font-weight:600;margin:.9rem 0 .25rem}
+.login input,.login select{width:100%;padding:.7rem .8rem;border:2px solid var(--line);border-radius:12px;background:#fff;font-size:1.05rem}
+.login input:focus{outline:none;border-color:var(--acc)}
+/* Home */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.9rem}
+.st{cursor:pointer;display:flex;gap:.9rem;align-items:flex-start;transition:transform .12s}
+.st:hover{transform:translateY(-2px)}
+.st .ico{font-size:2rem;width:58px;height:58px;border-radius:14px;display:grid;place-items:center;background:#eaf3f3;flex:none}
+.st h3{margin:0}
+.bar{height:9px;border-radius:9px;background:#ece4d4;overflow:hidden;margin-top:.5rem}
+.bar i{display:block;height:100%;background:var(--acc2);border-radius:9px}
+.stars{letter-spacing:1px;font-size:1.05rem}
+.stars .off{filter:grayscale(1);opacity:.28}
+.tasklist{display:grid;gap:.6rem}
+.task{display:flex;align-items:center;gap:.8rem;cursor:pointer}
+.task .n{width:38px;height:38px;border-radius:50%;background:#eaf3f3;display:grid;place-items:center;font-weight:700;flex:none}
+.task.done .n{background:#fff3cd}
+.task .go{margin-left:auto;color:var(--acc);font-weight:700}
+.hero{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:1rem}
+.hero .big{font-size:2.2rem;font-weight:800;color:#7a5200}
+/* Layout for board tasks */
+.two{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,1fr);gap:1rem;align-items:start}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.board{width:100%;height:auto;display:block;background:#fff;border:1px solid var(--line);border-radius:14px;touch-action:none;user-select:none;-webkit-user-select:none}
+.panel{display:grid;gap:.7rem}
+.box{background:#fff;border:1px solid var(--line);border-radius:12px;padding:.7rem .85rem}
+.merk{background:#fff8e1;border:2px solid var(--acc2);border-radius:12px;padding:.7rem .85rem}
+.merk b.t{display:block;color:#7a5200;margin-bottom:.15rem}
+.fb{min-height:1.2rem;border-radius:12px;padding:.6rem .8rem;font-weight:600}
+.fb:empty{padding:0}
+.fb.ok{background:var(--okbg);color:#1b6b2f}
+.fb.err{background:var(--errbg);color:var(--err)}
+.fb.info{background:#e8f1f8;color:#1d4f73}
+.read{display:grid;gap:.35rem}
+.read div{display:flex;justify-content:space-between;background:#f3efe6;border-radius:10px;padding:.4rem .7rem;font-variant-numeric:tabular-nums}
+.read div b{font-size:1.1rem}
+.read.good div{background:var(--okbg);color:#1b6b2f}
+.dots{display:flex;gap:.3rem;flex-wrap:wrap}
+.dots i{width:16px;height:16px;border-radius:50%;border:2px solid var(--acc);display:block}
+.dots i.on{background:var(--acc)}
+ol.steps{margin:0;padding-left:1.4rem;display:grid;gap:.35rem}
+ol.steps li{padding:.3rem .5rem;border-radius:8px;color:var(--mut)}
+ol.steps li.cur{background:#e8f1f8;color:var(--ink);font-weight:600}
+ol.steps li.fin::marker{color:var(--ok)}
+.ctl{display:grid;gap:.5rem}
+.slid{display:flex;align-items:center;gap:.5rem}
+.slid input[type=range]{flex:1;height:38px}
+.slid .pm{width:44px;height:44px;border-radius:50%;border:2px solid var(--acc);background:#fff;color:var(--acc);font-weight:800;font-size:1.2rem;cursor:pointer}
+.val{font-weight:800;font-size:1.25rem;text-align:center;font-variant-numeric:tabular-nums}
+.opts{display:grid;gap:.5rem}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:.65rem .8rem;cursor:pointer;min-height:46px}
+.opt:hover{border-color:var(--acc)}
+.opt.right{background:var(--okbg);border-color:var(--ok)}
+.opt.wrong{background:var(--errbg);border-color:var(--err);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.q{font-weight:700;font-size:1.1rem;margin-bottom:.5rem}
+/* Glossary */
+.gl{border-bottom:2px dotted var(--acc);cursor:help}
+#pop{position:fixed;z-index:50;background:#22303c;color:#fff;padding:.4rem .7rem;border-radius:10px;font-size:.95rem;max-width:260px;display:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+#toast{position:fixed;left:50%;top:76px;transform:translateX(-50%);z-index:60;background:#fff3cd;border:2px solid var(--acc2);color:#7a5200;font-weight:800;font-size:1.2rem;padding:.6rem 1.2rem;border-radius:99px;display:none;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+#toast.show{display:block;animation:pop .5s}
+@keyframes pop{0%{transform:translateX(-50%) scale(.5)}60%{transform:translateX(-50%) scale(1.15)}100%{transform:translateX(-50%) scale(1)}}
+.donebox{margin-top:1rem;border:2px solid var(--acc2);background:#fffaf0}
+/* Words */
+.flash{max-width:560px;margin:0 auto;text-align:center}
+.flash .w{font-size:1.8rem;font-weight:800}
+.flash svg,.pic svg{width:200px;height:150px;max-width:100%}
+.art-der{color:#1c6fd1}.art-die{color:#d6336c}.art-das{color:#2f9e44}
+.tiles{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;min-height:54px}
+.tile{background:#fff;border:2px solid var(--acc);border-radius:10px;padding:.5rem .8rem;font-weight:700;cursor:pointer;font-size:1.1rem;min-height:46px}
+.tile.used{opacity:.25;pointer-events:none}
+.build{min-height:58px;border:2px dashed var(--line);border-radius:12px;padding:.5rem;display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;align-items:center;background:#fff;font-size:1.2rem;font-weight:700}
+.inp{width:100%;max-width:460px;padding:.7rem .8rem;border:2px solid var(--line);border-radius:12px;font-size:1.3rem;text-align:center;background:#fff;letter-spacing:.5px}
+.inp:focus{outline:none;border-color:var(--acc)}
+.mask{font:700 1.7rem ui-monospace,Menlo,Consolas,monospace;letter-spacing:3px}
+.center{text-align:center;display:grid;gap:.8rem;justify-items:center}
+.prog{font-size:.92rem;color:var(--mut)}
+.sort{display:grid;gap:.4rem}
+.sort .it{display:flex;align-items:center;gap:.5rem;background:#fff;border:2px solid var(--line);border-radius:12px;padding:.45rem .6rem}
+.sort .it span{flex:1}
+.sort .it button{width:40px;height:40px;border-radius:10px;border:2px solid var(--acc);background:#fff;color:var(--acc);font-weight:800;cursor:pointer}
+.sort .it.right{border-color:var(--ok);background:var(--okbg)}
+.sort .it.wrong{border-color:var(--err);background:var(--errbg)}
+select.gap{font-weight:700;border:2px solid var(--acc);border-radius:8px;padding:.2rem .3rem;background:#fff;margin:.15rem 0}
+select.gap.right{border-color:var(--ok);background:var(--okbg)} select.gap.wrong{border-color:var(--err);background:var(--errbg)}
+.gaptext{line-height:2.3}
+/* SVG board styles (1 cm = 100 units) */
+.board .g1{stroke:#dfe7ee;stroke-width:1.5} .board .g2{stroke:#eef3f7;stroke-width:1}
+.board line,.board circle,.board path,.board polyline,.board polygon{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.board .giv{stroke:#22303c;stroke-width:5}
+.board .aux{stroke:#8793a0;stroke-width:3;stroke-dasharray:14 12}
+.board .thin{stroke:#8793a0;stroke-width:3}
+.board .k{stroke:var(--k);stroke-width:5} .board .ms{stroke:var(--ms);stroke-width:5}
+.board .wh{stroke:var(--wh);stroke-width:5} .board .mp{stroke:var(--mp);stroke-width:5}
+.board .par{stroke:var(--par);stroke-width:5}
+.board .tri{stroke:#22303c;stroke-width:6;fill:rgba(242,169,0,.18)}
+.board .sol{stroke:var(--acc2);stroke-width:16;opacity:.75}
+.board .fillk{fill:rgba(28,111,209,.12);stroke:none}
+.board .pv{stroke:var(--acc);stroke-width:4;stroke-dasharray:10 10}
+.board .dot{fill:#22303c;stroke:#fff;stroke-width:3}
+.board .dot.open{fill:#fff;stroke:#22303c;stroke-width:5}
+.board .dot.sol{fill:var(--acc2);stroke:#7a5200;stroke-width:4;opacity:1}
+.board .dot.mk{fill:var(--ok);stroke:#fff;stroke-width:3}
+.board .dot.q{fill:#fff;stroke:var(--acc);stroke-width:5}
+.board text{font:600 38px "Avenir Next","Segoe UI",system-ui,sans-serif;fill:#22303c;stroke:none;paint-order:stroke}
+.board text.h{stroke:#fff;stroke-width:9px}
+.board text.c-k{fill:var(--k)} .board text.c-ms{fill:var(--ms)} .board text.c-wh{fill:var(--wh)} .board text.c-mp{fill:var(--mp)} .board text.c-par{fill:var(--par)} .board text.c-acc{fill:var(--acc)}
+.board .hot{fill:rgba(31,111,120,.001);stroke:rgba(31,111,120,.35);stroke-width:4;stroke-dasharray:10 9;cursor:pointer}
+.board .hot:hover{fill:rgba(31,111,120,.12)}
+.board .handle{fill:var(--acc2);stroke:#7a5200;stroke-width:5;cursor:grab}
+.board .anim{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 1.1s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.cert{text-align:center;border:3px double var(--acc2)}
+.hud{display:flex;gap:.8rem;align-items:center;flex-wrap:wrap;margin-bottom:.7rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.55rem .8rem}
+.pill2{background:#f3efe6;border-radius:99px;padding:.15rem .65rem;font-weight:700;font-size:.92rem;white-space:nowrap}
+.pill2.bad{background:var(--errbg);color:var(--err)} .pill2.fire{background:#fff3cd;color:#a14b00}
+.dotsrow i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-left:3px;vertical-align:middle} .dotsrow i.g{background:var(--ok)} .dotsrow i.r{background:var(--err)}
+.item{animation:fadein .25s} @keyframes fadein{from{opacity:0;transform:translateY(6px)}}
+.again{margin-top:.35rem;font-weight:500;font-size:.92rem}
+.narrow{max-width:680px;margin:0 auto;display:grid;gap:.7rem}
+.rowopts{grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.stmt{display:inline-block;margin-top:.3rem;font-size:1.25rem;background:#f3efe6;border-radius:10px;padding:.2rem .7rem}
+.chips{display:flex;flex-wrap:wrap;gap:.45rem}
+.chip{border:2px solid var(--line);background:#fff;border-radius:99px;padding:.45rem .85rem;font-weight:600;cursor:pointer;min-height:44px}
+.chip.on{border-color:var(--acc);background:#dff0f1;color:var(--acc)}
+.chip.right{border-color:var(--ok);background:var(--okbg);color:#1b6b2f} .chip.wrong{border-color:var(--err);background:var(--errbg);color:var(--err);text-decoration:line-through} .chip.miss{border-color:var(--acc2);background:#fff3cd;color:#7a5200}
+.big{font-size:1.9rem;font-weight:800} .bigstars .stars{font-size:2.6rem;letter-spacing:6px}
+.weak{margin-top:1rem;display:grid;gap:.5rem;border-color:var(--acc2)}
+.word{text-align:center;font:800 3rem "Arial","Helvetica",sans-serif;letter-spacing:.12em;color:var(--ink)}
+.word span{display:inline-block} .word.mir{color:var(--ms)} .word.ms span{transform:scaleX(-1)} .word.mw span{transform:scaleY(-1)}
+.heftcard{display:grid;gap:.7rem;font-size:1.05rem}
+ol.instr{margin:.35rem 0 0;padding-left:1.4rem;display:grid;gap:.4rem}
+.shot img{max-width:100%;max-height:420px;border-radius:12px;border:1px solid var(--line);display:block;margin:0 auto}
+.inp{font-size:1.2rem}
+/* Karopapier */
+.board.karo{background:#fff}
+.board .kg{stroke:#cfe0ee;stroke-width:1.2}
+.board.tappable{cursor:pointer}
+.board .kl{stroke:#22303c;stroke-width:3;fill:none;stroke-linecap:round}
+.board .kl.thick{stroke-width:4.5}
+.board .kl.c1{stroke:#1c6fd1} .board .kl.c2{stroke:#d6336c}
+.board .kl.axis{stroke:#e03131;stroke-width:3;stroke-dasharray:12 7}
+.board .kl.res{stroke:var(--ok);stroke-width:4}
+.board .kl.ghost{stroke:var(--ok);stroke-width:3;stroke-dasharray:8 7}
+.board .kl.wrongline{stroke:var(--err);stroke-width:3;stroke-dasharray:6 6}
+.board .kl.help{stroke:#8793a0;stroke-width:2;stroke-dasharray:6 6}
+.board .kl.hl1{stroke:var(--acc2);stroke-width:9;opacity:.75} .board .kl.hl2{stroke:#7048e8;stroke-width:9;opacity:.6}
+.board .kp{stroke-width:3.5;stroke-linejoin:round}
+.board .kp.c1{stroke:#1c6fd1;fill:rgba(28,111,209,.10)} .board .kp.c2{stroke:#d6336c;fill:rgba(214,51,108,.12)}
+.board .kd{fill:#22303c;stroke:#fff;stroke-width:2.5}
+.board .kd.acc{fill:var(--acc)} .board .kd.c2{fill:#d6336c} .board .kd.ok{fill:var(--ok)} .board .kd.z{fill:#e8590c}
+.board .kt{font:700 22px "Avenir Next","Segoe UI",system-ui,sans-serif;fill:#22303c;stroke:#fff;stroke-width:6px;paint-order:stroke}
+.board .kt.c-c1{fill:#1c6fd1} .board .kt.c-c2{fill:#d6336c} .board .kt.c-axis{fill:#e03131} .board .kt.c-acc{fill:var(--acc)} .board .kt.c-ok{fill:var(--ok)} .board .kt.c-z{fill:#e8590c}
+.board .kra path{fill:none;stroke:#22303c;stroke-width:2} .board .kra circle{fill:#22303c}
+.board .ghostra path{stroke:var(--ok)} .board .ghostra circle{fill:var(--ok)}
+.board .kring{fill:rgba(31,111,120,.12);stroke:var(--acc);stroke-width:3}
+.board .kring.bad{fill:rgba(201,42,42,.18);stroke:var(--err)}
+.board .kring.sol,.board .kring.cur{fill:rgba(242,169,0,.3);stroke:var(--acc2);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.35}}
+.board .anim2{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw2 1s forwards} @keyframes draw2{to{stroke-dashoffset:0}}
+.board.plainb{background:#fff;max-width:300px;margin:0 auto}
+.board .letter{font:700 220px Arial,Helvetica,sans-serif;fill:#1c6fd1}
+.board .letax{stroke:#e03131;stroke-width:4;stroke-dasharray:14 9}
+.ghostrot{opacity:.55;transition:transform 1.4s ease;transform-box:view-box}
+.ghostrot.go{transform:rotate(180deg)}
+.ghostrot text,.ghostrot polygon,.ghostrot circle{fill:rgba(214,51,108,.35)!important;stroke:#d6336c!important}
+.chk{display:flex;gap:.55rem;align-items:flex-start;padding:.3rem 0;cursor:pointer}
+.chk input{width:22px;height:22px;flex:none;margin-top:.15rem;accent-color:var(--acc)}
+/* Zeichnen */
+.phases{display:flex;gap:.4rem;margin-bottom:.8rem;flex-wrap:wrap}
+.ph{flex:1;min-width:150px;border:2px solid var(--line);background:#fff;border-radius:12px;padding:.55rem;font-weight:700;cursor:pointer;min-height:46px}
+.ph.on{border-color:var(--acc);background:var(--acc);color:#fff}
+.ph.ok::after{content:' ✅'}
+.ph[disabled]{opacity:.4;cursor:default}
+.two.draw{grid-template-columns:minmax(0,1.9fr) minmax(260px,1fr)}
+@media(max-width:900px){.two.draw{grid-template-columns:1fr}}
+.tools{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:.5rem;align-items:center}
+.tool{border:2px solid var(--line);background:#fff;border-radius:12px;padding:.25rem .55rem;min-height:46px;display:flex;align-items:center;gap:.3rem;font-weight:600;font-size:.92rem;cursor:pointer;color:var(--ink)}
+.tool svg{width:24px;height:24px;flex:none}
+.tool.on{border-color:var(--acc);background:#dff0f1;color:var(--acc)}
+.tools .sep{flex:1}
+.thelp{margin-top:.45rem;background:#e8f1f8;color:#1d4f73;border-radius:10px;padding:.45rem .7rem;font-size:.95rem;min-height:2.2rem}
+ol.instr{margin:.35rem 0 0;padding-left:1.4rem;display:grid;gap:.3rem}
+ol.instr li.heft{color:var(--mut)}
+.tag{display:inline-block;font-size:.78rem;background:#f3efe6;border-radius:99px;padding:0 .45rem;color:#7a5200;font-style:normal}
+.heftcard{display:grid;gap:.7rem;font-size:1.05rem}
+.heftcard ol.instr{gap:.5rem}
+.board.mini{margin-top:.5rem}
+.shot img{max-width:100%;max-height:440px;border-radius:12px;border:1px solid var(--line);display:block;margin:0 auto}
+.board .uc{stroke:#6a9be0;stroke-width:3} .board .uc2{stroke:#6a9be0;stroke-width:3}
+.board .ul{stroke:#5d6875;stroke-width:3.5}
+.board .ux{stroke:var(--acc);stroke-width:5} .board .ux2{stroke:#c2410c;stroke-width:7}
+.board .res{stroke:#22303c;stroke-width:6}
+.board .sel{stroke:var(--acc2);stroke-width:14;opacity:.55}
+.board .snap{fill:rgba(242,169,0,.25);stroke:var(--acc2);stroke-width:4}
+</style>
+</head>
+<body>
+<header id="top">
+  <div class="brand" id="brand">📐 Fit für die Klassenarbeit</div>
+  <span class="pill" id="who" hidden></span>
+  <span class="pill" id="cloud" hidden title="Speicher-Status"></span>
+  <span class="pill star" id="starcount" hidden>⭐ 0</span>
+  <button id="logout" hidden>Abmelden</button>
+</header>
+<main id="main"></main>
+<div id="toast"></div>
+<div id="pop"></div>
+<script>
+'use strict';
+/* =====================================================================
+   EINSTELLUNGEN FÜR DIE LEHRKRAFT
+   Die Seite arbeitet mit dem „Fortschritt-Server“ (Google Sheet + Code.gs).
+   Die Server-ID kommt normalerweise aus dem Link:  ...?u=7a-03&s=<Server-ID>
+   (so stehen die Links auf den Zugangskarten / QR-Codes).
+   SERVER_ID : optional fest eintragen (Teil der Web-App-URL zwischen /s/ und /exec).
+               Ohne Server-ID wird nur auf dem Gerät gespeichert.
+   APP_ID    : Name der Seite im Sheet (Blatt „📊 <APP_ID>“ und Zeile in „Seiten“).
+   ===================================================================== */
+const CONFIG = {
+  SERVER_ID: '',
+  APP_ID: 'k5-geometrie-ka',
+  TITEL: 'Klassenarbeit Geometrie (Mathematik 5)'
+};
+const QS = new URLSearchParams(location.search);
+const SERVER_ID = (QS.get('s') || CONFIG.SERVER_ID || '').replace(/[^A-Za-z0-9_-]/g, '');
+const SERVER_URL = SERVER_ID ? 'https://script.google.com/macros/s/' + SERVER_ID + '/exec' : '';
+const PAGE_LINK = /^https:/.test(location.href) ? location.origin + location.pathname : '';
+
+/* ---------- kleine Helfer ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+function el(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  if (typeof props === 'string') e.innerHTML = props;
+  else if (props) for (const k in props) {
+    if (k === 'class') e.className = props[k];
+    else if (k === 'html') e.innerHTML = props[k];
+    else if (k.startsWith('on')) e.addEventListener(k.slice(2), props[k]);
+    else e.setAttribute(k, props[k]);
+  }
+  for (const k of kids) if (k) e.append(k);
+  return e;
+}
+const rnd = (a, b) => a + Math.random() * (b - a);
+const pick = a => a[Math.floor(Math.random() * a.length)];
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const num = v => (Math.abs(v - Math.round(v)) < 1e-9 ? String(Math.round(v)) : v.toFixed(1).replace('.', ','));
+const cm = v => num(v) + '&nbsp;cm';
+const f1 = v => v.toFixed(1).replace('.', ',');
+
+/* ---------- Glossar (Deutsch -> Englisch als Hilfe) ---------- */
+const GLOSS = {
+  'Geraden': 'straight lines', 'Gerade': 'straight line', 'orthogonal': 'perpendicular', 'Orthogonale': 'perpendicular line', 'rechten Winkel': 'right angle(s)', 'rechter Winkel': 'right angle', 'rechte Winkel': 'right angles',
+  'Schnittpunkt': 'point of intersection', 'Mittellinie': 'centre line (on the set square)', 'Geodreieck': 'set square', 'spiegeln': 'to reflect', 'Spiegle': 'reflect', 'gespiegelt': 'reflected', 'Spiegelachse': 'mirror line',
+  'Bildpunkte': 'image points', 'Bildpunkt': 'image point', 'Bildfigur': 'image (reflected figure)', 'Abstand': 'distance', 'Eckpunkt': 'vertex (corner)', 'achsensymmetrisch': 'line-symmetric', 'achsensymmetrischen': 'line-symmetric',
+  'Symmetrieachsen': 'lines of symmetry', 'Symmetrieachse': 'line of symmetry', 'falten': 'to fold', 'Ergänze': 'complete', 'parallel': 'parallel', 'Parallele': 'parallel line', 'Strecke': 'line segment', 'schneiden sich': 'intersect',
+  'Vierecke': 'quadrilaterals', 'Viereck': 'quadrilateral', 'Trapez': 'trapezium', 'Raute': 'rhombus', 'Drachen': 'kite', 'Parallelogramm': 'parallelogram', 'Rechteck': 'rectangle', 'Quadrat': 'square',
+  'gegenüberliegende': 'opposite', 'gegen den Uhrzeigersinn': 'anticlockwise', 'punktsymmetrisch': 'point-symmetric', 'Symmetriezentrum': 'centre of symmetry', 'halben Drehung': 'half turn (180°)', 'halbe Drehung': 'half turn (180°)',
+  'Kästchen-Diagonalen': 'diagonals of the squares', 'Kästchen': 'squares (on squared paper)', 'Diagonale': 'diagonal', 'senkrechte': 'vertical', 'waagrechten': 'horizontal', 'waagrechte': 'horizontal', 'senkrechten': 'vertical',
+  'Heft': 'exercise book', 'Prüfe': 'check', 'Zeichne': 'draw', 'Beschrifte': 'label', 'Markiere': 'mark', 'Miss': 'measure', 'Spiegelschrift': 'mirror writing', 'Viertelkreis': 'quarter circle', 'Hälften': 'halves'
+};
+const GLRE = new RegExp('(^|[^A-Za-zÄÖÜäöüß])(' + Object.keys(GLOSS).sort((a, b) => b.length - a.length).join('|') + ')(?![A-Za-zÄÖÜäöüß])', 'g');
+/* T(): markiert Fachwörter im Text. Antippen zeigt die englische Bedeutung. */
+function T(html) {
+  return String(html).split(/(<[^>]+>)/).map(p => p.startsWith('<') ? p : p.replace(GLRE, (m, pre, w) => `${pre}<span class="gl" data-en="${GLOSS[w]}">${w}</span>`)).join('');
+}
+document.addEventListener('click', e => {
+  const pop = $('#pop'), g = e.target.closest && e.target.closest('.gl');
+  if (!g) { pop.style.display = 'none'; return; }
+  pop.textContent = '🇬🇧 ' + g.dataset.en; pop.style.display = 'block';
+  const r = g.getBoundingClientRect();
+  pop.style.left = Math.max(8, Math.min(window.innerWidth - pop.offsetWidth - 8, r.left)) + 'px';
+  pop.style.top = (r.bottom + 6) + 'px';
+});
+window.addEventListener('scroll', () => { $('#pop').style.display = 'none'; }, true);
+function speak(text) {
+  try { const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.rate = .85; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { }
+}
+
+/* ---------- Zustand, Speichern, Google Sheet ---------- */
+let ST = null;               // {user:{u,pin,name,klasse}, stars:{}, err:0, errs:{}, sec:0, fotos:{}}
+let CUR = null;              // aktuelle Aufgabe (für die Fehlerzählung pro Aufgabe)
+const LS = 'k5_geometrie_ka_v1';
+const userKey = u => LS + ':' + String(u.u).toLowerCase();
+function totalStars() { return Object.keys(ST.stars).length; }
+function maxStars() { return STATIONS.reduce((s, x) => s + x.tasks.reduce((t, y) => t + (y.stars || 1), 0), 0); }
+function stationStars(st) { return st.tasks.reduce((s, t) => s + starsOf(t), 0); }
+function starsOf(t) { const n = t.stars || 1; let c = 0; for (let i = 1; i <= n; i++) if (ST.stars[n === 1 ? t.id : t.id + '.' + i]) c++; return c; }
+function saveLocal() {
+  try { localStorage.setItem(userKey(ST.user), JSON.stringify(ST)); localStorage.setItem(LS + ':last', JSON.stringify(ST.user)); } catch (e) { }
+}
+let dirty = false, syncT = null, syncing = false;
+function save() { saveLocal(); dirty = true; clearTimeout(syncT); syncT = setTimeout(sync, 1500); header(); }
+const taskMax = t => t.stars || 1;
+function summary() {
+  const tasks = {}; let done = 0, n = 0; const fotos = [];
+  STATIONS.forEach(st => st.tasks.forEach(t => {
+    const mx = taskMax(t), got = starsOf(t), e = (ST.errs || {})[t.id] || 0, d = got >= mx ? 1 : 0;
+    n++; done += d; tasks[t.id] = [got, mx, e, got, mx, t.id, st.title + ': ' + t.title];   // Teile: Tablet ✏️ + Foto 📷
+    if (t.foto) fotos.push(t.id);
+  }));
+  const extra = { test: ['🏆 Geometrie-Test (Bestwert)', (ST.best || 0) + ' von 12'], fotos: ['📷 Fotos gesendet', Object.keys(ST.fotos || {}).filter(k => fotos.includes(k)).length + ' von ' + fotos.length], min: ['Minuten', String(Math.round((ST.sec || 0) / 60))] };
+  return { stars: totalStars(), max: maxStars(), err: ST.err || 0, done, n, tasks, extra, fotos };
+}
+function payload() {
+  return { action: 'save', u: ST.user.u, p: ST.user.pin, app: CONFIG.APP_ID, titel: CONFIG.TITEL, link: PAGE_LINK, t: Date.now(),
+    state: { stars: ST.stars, err: ST.err, errs: ST.errs, sec: ST.sec, fotos: ST.fotos, best: ST.best }, sum: summary() };
+}
+async function api(data) {
+  const r = await fetch(SERVER_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data), redirect: 'follow' });
+  return await r.json();
+}
+function cloud(state) {
+  const c = $('#cloud'); if (!ST) { c.hidden = true; return; } c.hidden = false;
+  c.textContent = { off: '💾 nur auf diesem Gerät', ok: '☁️ gespeichert', busy: '☁️ speichert …', err: '⚠️ offline – wird später gespeichert' }[state];
+}
+async function sync() {
+  if (!ST || !SERVER_URL) { cloud('off'); return; }
+  if (syncing || !dirty) return;
+  syncing = true; dirty = false; cloud('busy');
+  try { const r = await api(payload()); if (r && r.ok) cloud('ok'); else throw new Error(r && r.err); }
+  catch (e) { dirty = true; cloud('err'); }
+  syncing = false;
+  if (dirty) { clearTimeout(syncT); syncT = setTimeout(sync, 20000); }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden' && ST) {
+    saveLocal();
+    if (SERVER_URL && dirty) try { if (navigator.sendBeacon(SERVER_URL, new Blob([JSON.stringify(payload())], { type: 'text/plain;charset=utf-8' }))) dirty = false; } catch (e) { }
+  }
+});
+setInterval(() => { if (ST && document.visibilityState === 'visible') { ST.sec = (ST.sec || 0) + 10; if (ST.sec % 60 === 0) { saveLocal(); dirty = true; if (ST.sec % 300 === 0) sync(); } } }, 10000);
+
+function miss() { if (ST) { ST.err = (ST.err || 0) + 1; if (CUR) { ST.errs = ST.errs || {}; ST.errs[CUR] = (ST.errs[CUR] || 0) + 1; } saveLocal(); dirty = true; } }
+function award(id) {
+  if (ST.stars[id]) return false;
+  ST.stars[id] = 1; save();
+  const t = $('#toast'); t.textContent = '⭐ +1 Stern!'; t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+  return true;
+}
+function header() {
+  const on = !!ST;
+  for (const id of ['who', 'starcount', 'logout', 'cloud']) $('#' + id).hidden = !on;
+  if (on) { $('#who').textContent = ST.user.name + (ST.user.klasse ? ' · ' + ST.user.klasse : ''); $('#starcount').textContent = '⭐ ' + totalStars() + ' / ' + maxStars(); if (!SERVER_URL) cloud('off'); }
+}
+
+/* ---------- Anmeldung ---------- */
+function showLogin(msg) {
+  ST = null; CUR = null; header();
+  const main = $('#main'); main.innerHTML = '';
+  let last = null; try { last = JSON.parse(localStorage.getItem(LS + ':last')); } catch (e) { }
+  const name = el('input', { id: 'ln', placeholder: SERVER_URL ? 'z. B. 7a-03' : 'dein Name', autocomplete: 'off', autocapitalize: 'off', autocorrect: 'off', spellcheck: 'false' });
+  const pin = el('input', { id: 'lp', placeholder: '4 Ziffern', inputmode: 'numeric', maxlength: '8', autocomplete: 'off' });
+  name.value = QS.get('u') || (last ? last.u : '');
+  const fb = el('div', { class: 'fb' + (msg ? ' err' : ''), html: msg || '' });
+  const go = el('button', { class: 'btn', html: 'Los geht’s! →' });
+  const card = el('div', { class: 'card login' },
+    el('h1', '📐 Fit für die Klassenarbeit'),
+    el('p', 'Hier übst du <b>Geometrie</b> für die Klassenarbeit: orthogonale und parallele Geraden, Achsenspiegelung, Symmetrie, Vierecke und Punktsymmetrie. Für jede Aufgabe bekommst du bis zu <b>3 Sterne ⭐⭐⭐</b> – ohne Fehler gibt es alle drei!<br><span class="en">Practise for your geometry test. Up to 3 stars per task – no mistakes = 3 stars.</span>'),
+    el('label', SERVER_URL ? 'Benutzername <span class="en">(username – see your card)</span>' : 'Name <span class="en">(your name)</span>'), name,
+    el('label', 'PIN <span class="en">(' + (SERVER_URL ? 'see your card' : 'choose 4 digits and remember them') + ')</span>'), pin,
+    el('div', { style: 'height:.9rem' }), fb, el('div', { style: 'height:.6rem' }), go,
+    el('p', { class: 'mut', style: 'font-size:.9rem;margin-bottom:0', html: 'Tipp: Unterstrichene Wörter kannst du antippen. Dann siehst du das Wort auf Englisch. 🇬🇧' + (SERVER_URL ? '' : '<br>Hinweis: Diese Seite ist nicht mit dem Server verbunden. Deine Sterne bleiben nur auf diesem Gerät.') }));
+  main.append(card);
+  const bad = h => { ST = null; go.disabled = false; fb.className = 'fb err'; fb.innerHTML = h; };
+  async function submit() {
+    const u = { u: name.value.trim().toLowerCase().replace(/\s+/g, SERVER_URL ? '' : ' '), pin: pin.value.trim(), name: name.value.trim(), klasse: '' };
+    if (u.u.length < 2) return bad(SERVER_URL ? 'Bitte schreibe deinen Benutzernamen.' : 'Bitte schreibe deinen Namen.');
+    if (!/^\d{3,8}$/.test(u.pin)) return bad('Bitte schreibe deine PIN (nur Ziffern).');
+    let local = null; try { local = JSON.parse(localStorage.getItem(userKey(u))); } catch (e) { }
+    if (!SERVER_URL && local && local.user && local.user.pin !== u.pin) return bad('Die PIN ist falsch.');
+    ST = { user: u, stars: {}, err: 0, errs: {}, sec: 0, fotos: {}, best: 0 };
+    if (local && local.user && local.user.pin === u.pin) { Object.assign(ST, local); ST.user = Object.assign({}, local.user, { pin: u.pin }); ST.fotos = ST.fotos || {}; }
+    if (SERVER_URL) {
+      go.disabled = true; fb.className = 'fb info'; fb.innerHTML = 'Einen Moment … ☁️';
+      let r = null;
+      try { r = await api({ action: 'login', u: u.u, p: u.pin, app: CONFIG.APP_ID, titel: CONFIG.TITEL, link: PAGE_LINK }); } catch (e) { r = null; }
+      if (r && r.ok === false) {
+        return bad({ login: 'Benutzername oder PIN ist falsch. <span class="en">(Wrong username or PIN.)</span>', gesperrt: 'Zu viele falsche Versuche. Warte 10 Minuten und frage deine Lehrkraft.', klasse: 'Diese Seite ist für deine Klasse noch nicht freigeschaltet. Frage deine Lehrkraft.' }[r.err] || 'Der Server meldet einen Fehler. Versuche es noch einmal.');
+      }
+      if (r && r.ok) {
+        ST.user.name = r.voll || r.name || u.u; ST.user.klasse = r.klasse || '';
+        const d = r.data && r.data.state;
+        if (d) { Object.assign(ST.stars, d.stars || {}); ST.err = Math.max(ST.err || 0, d.err || 0); ST.sec = Math.max(ST.sec || 0, d.sec || 0); ST.best = Math.max(ST.best || 0, d.best || 0); for (const k in (d.errs || {})) ST.errs[k] = Math.max(ST.errs[k] || 0, d.errs[k]); for (const k in (d.fotos || {})) if (!ST.fotos[k] || (d.fotos[k].t || 0) > (ST.fotos[k].t || 0)) ST.fotos[k] = d.fotos[k]; }
+        cloud('ok');
+      } else {
+        // Server nicht erreichbar: nur weiter, wenn dieses Gerät den Zugang schon kennt
+        if (!(local && local.user && local.user.pin === u.pin)) return bad('Keine Verbindung zum Server. Prüfe das Internet und versuche es noch einmal.');
+        cloud('err');
+      }
+      dirty = true;
+    }
+    saveLocal(); header(); showHome(); if (SERVER_URL) { sync(); retryFotos(); }
+  }
+  go.addEventListener('click', submit);
+  pin.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+}
+
+/* ---------- Übersicht ---------- */
+function starRow(n, of) { let s = ''; for (let i = 0; i < of; i++) s += `<span class="${i < n ? '' : 'off'}">⭐</span>`; return `<span class="stars">${s}</span>`; }
+function showHome() {
+  CUR = null;
+  window.scrollTo(0, 0);
+  const main = $('#main'); main.innerHTML = '';
+  const tot = totalStars(), mx = maxStars();
+  const hero = el('div', { class: 'card hero' },
+    el('div', `<div class="big">⭐ ${tot} / ${mx}</div><div class="mut">Sterne von ${ST.user.name}</div>`),
+    el('div', { style: 'flex:1;min-width:220px' }, el('div', tot >= mx ? '<b>Alle Sterne! Du bist fit in Geometrie! 🏆</b>' : tot === 0 ? '<b>Willkommen!</b> Beginne mit Station 1 – oder teste dich gleich im Geometrie-Test.' : '<b>Weiter so!</b> Wähle eine Station.'), el('div', { class: 'bar', html: `<i style="width:${100 * tot / mx}%"></i>` })));
+  main.append(hero);
+  const grid = el('div', { class: 'grid' });
+  STATIONS.forEach((st, i) => {
+    const n = stationStars(st), of = st.tasks.reduce((t, y) => t + (y.stars || 1), 0);
+    grid.append(el('div', { class: 'card st', onclick: () => showStation(st.id) },
+      el('div', { class: 'ico', html: st.icon }),
+      el('div', { style: 'flex:1' }, el('h3', `Station ${i + 1}: ${st.title}`), el('div', { class: 'mut', html: st.sub }), el('div', { html: starRow(n, of) }))));
+  });
+  main.append(grid);
+  const weak = STATIONS.flatMap(s => s.tasks.map(t => ({ s, t, e: (ST.errs || {})[t.id] || 0 }))).filter(x => x.e > 0 && starsOf(x.t) < (x.t.stars || 1)).sort((a, b) => b.e - a.e).slice(0, 3);
+  if (weak.length) main.append(el('div', { class: 'card weak' }, el('h3', '🎯 Hier übst du am besten noch einmal'), el('div', { class: 'mut', html: 'Hier hattest du die meisten Fehler. Aus Fehlern lernt man – versuche es noch einmal!' }),
+    ...weak.map(x => el('button', { class: 'opt', html: `${x.s.icon} <b>${x.t.title}</b> <span class="mut">(${x.s.title})</span> – <span style="color:var(--err)">❌ ${x.e} Fehler</span> · ${starRow(starsOf(x.t), x.t.stars || 1)}`, onclick: () => runTask(x.s.id, x.t.id) }))));
+  main.append(el('p', { class: 'mut', style: 'margin-top:1.2rem', html: SERVER_URL ? 'Deine Sterne und Fotos werden automatisch gespeichert. Deine Lehrkraft kann sie sehen.' : 'Deine Sterne werden auf diesem Gerät gespeichert.' }));
+}
+function showStation(sid) {
+  CUR = null;
+  window.scrollTo(0, 0);
+  const st = STATIONS.find(s => s.id === sid), main = $('#main'); main.innerHTML = '';
+  main.append(el('div', { class: 'crumb' }, el('button', { class: 'btn sec small', html: '← Übersicht', onclick: showHome }), el('h2', `${st.icon} ${st.title}`)));
+  if (st.intro) main.append(el('div', { class: 'card', style: 'margin-bottom:.9rem', html: T(st.intro) }));
+  const list = el('div', { class: 'tasklist' });
+  st.tasks.forEach((t, i) => {
+    const of = t.stars || 1, n = starsOf(t);
+    list.append(el('div', { class: 'card task' + (n >= of ? ' done' : ''), onclick: () => runTask(sid, t.id) },
+      el('div', { class: 'n', html: String(i + 1) }), el('div', `<b>${t.title}</b><div class="mut">${t.sub || ''}</div>` + (t.foto ? `<div class="mut" style="font-size:.88rem">📷 Foto ${ST.fotos[t.id] ? '✅ gesendet' : pendGet()[t.id] ? '⏳ wartet auf Internet' : '– noch nicht gesendet'}</div>` : ((ST.errs || {})[t.id] ? `<div style="font-size:.88rem;color:var(--err)">❌ ${(ST.errs || {})[t.id]} Fehler bisher</div>` : ''))),
+      el('div', { class: 'go', html: starRow(n, of) + ' ▸' })));
+  });
+  main.append(list);
+}
+function runTask(sid, tid) {
+  window.scrollTo(0, 0);
+  const st = STATIONS.find(s => s.id === sid), idx = st.tasks.findIndex(t => t.id === tid), t = st.tasks[idx], main = $('#main');
+  CUR = t.id;
+  main.innerHTML = '';
+  main.append(el('div', { class: 'crumb' }, el('button', { class: 'btn sec small', html: '← ' + st.title, onclick: () => showStation(sid) }), el('h2', t.title)));
+  const host = el('div'); main.append(host);
+  let finished = false;
+  function done(msg, starId) {
+    if (finished) return; finished = true;
+    const isNew = award(starId || t.id);
+    const nx = st.tasks[idx + 1];
+    const box = el('div', { class: 'card donebox' },
+      el('h3', (isNew ? '⭐ Geschafft! Du hast einen Stern bekommen.' : '✅ Geschafft!')),
+      msg ? el('div', { html: T(msg), style: 'margin-bottom:.7rem' }) : null,
+      el('div', { class: 'row' },
+        nx ? el('button', { class: 'btn', html: 'Nächste Aufgabe →', onclick: () => runTask(sid, nx.id) }) : el('button', { class: 'btn', html: 'Zur Übersicht →', onclick: showHome }),
+        el('button', { class: 'btn sec', html: '↻ Noch einmal üben', onclick: () => runTask(sid, tid) }),
+        el('button', { class: 'btn sec', html: '← ' + st.title, onclick: () => showStation(sid) })));
+    main.append(box); box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+  t.run(host, done);
+}
+
+/* ---------- Multiple Choice ---------- */
+function mc(host, q, opts, onRight) {
+  const box = el('div', { class: 'box' }, el('div', { class: 'q', html: T(q) }));
+  const list = el('div', { class: 'opts' }), fb = el('div', { class: 'fb' });
+  let locked = false, firstTry = true;
+  shuffle(opts).forEach(o => {
+    const b = el('button', { class: 'opt', html: o.t });
+    b.addEventListener('click', () => {
+      if (locked) return;
+      if (o.ok) { locked = true; b.classList.add('right'); fb.className = 'fb ok'; fb.innerHTML = T('Richtig! ' + (o.fb || '')); onRight && onRight(firstTry); }
+      else { firstTry = false; miss(); b.classList.add('wrong'); fb.className = 'fb err'; fb.innerHTML = T(o.fb || 'Das stimmt nicht. Versuche es noch einmal.'); }
+    });
+    list.append(b);
+  });
+  box.append(list, fb); host.append(box);
+  return box;
+}
+
+/* ---------- Geometrie ---------- */
+const V = {
+  add: (a, b) => ({ x: a.x + b.x, y: a.y + b.y }), sub: (a, b) => ({ x: a.x - b.x, y: a.y - b.y }),
+  mul: (a, k) => ({ x: a.x * k, y: a.y * k }), len: a => Math.hypot(a.x, a.y), dist: (a, b) => Math.hypot(a.x - b.x, a.y - b.y),
+  unit: a => { const l = Math.hypot(a.x, a.y) || 1; return { x: a.x / l, y: a.y / l }; }, perp: a => ({ x: -a.y, y: a.x }),
+  dot: (a, b) => a.x * b.x + a.y * b.y, cross: (a, b) => a.x * b.y - a.y * b.x, mid: (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }),
+  ang: deg => ({ x: Math.cos(deg * Math.PI / 180), y: -Math.sin(deg * Math.PI / 180) })   // y zeigt im Bild nach unten
+};
+const Ln = (p, d) => ({ p, d: V.unit(d) });                       // Gerade: Punkt + Richtung
+const LnPP = (a, b) => Ln(a, V.sub(b, a));
+const sdLine = (P, l) => V.cross(l.d, V.sub(P, l.p));              // Abstand mit Vorzeichen
+const dLine = (P, l) => Math.abs(sdLine(P, l));
+const proj = (P, l) => V.add(l.p, V.mul(l.d, V.dot(V.sub(P, l.p), l.d)));
+const shift = (l, k) => Ln(V.add(l.p, V.mul(V.perp(l.d), k)), l.d);
+const bisector = (A, B) => Ln(V.mid(A, B), V.perp(V.sub(B, A)));
+function xLL(l, m) { const c = V.cross(l.d, m.d); if (Math.abs(c) < 1e-9) return null; const t = V.cross(V.sub(m.p, l.p), m.d) / c; return V.add(l.p, V.mul(l.d, t)); }
+function xLC(l, C, r) { const F = proj(C, l), d = V.dist(F, C); if (d > r) return []; const h = Math.sqrt(r * r - d * d); return [V.add(F, V.mul(l.d, h)), V.add(F, V.mul(l.d, -h))]; }
+function xCC(A, r, B, s) { const d = V.dist(A, B); if (d > r + s || d < Math.abs(r - s) || d === 0) return []; const a = (r * r - s * s + d * d) / (2 * d), h = Math.sqrt(Math.max(0, r * r - a * a)), u = V.unit(V.sub(B, A)), M = V.add(A, V.mul(u, a)), n = V.perp(u); return [V.add(M, V.mul(n, h)), V.add(M, V.mul(n, -h))]; }
+
+/* ---------- Zeichenbrett (SVG, 1 cm = 100 Einheiten) ---------- */
+const NS = 'http://www.w3.org/2000/svg', U = 100;
+function S(tag, attrs, parent) { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+function Board(host, W, H) {
+  const svg = S('svg', { viewBox: `0 0 ${W * U} ${H * U}`, class: 'board' }); host.append(svg);
+  const grid = S('g', {}, svg);
+  for (let x = 0; x <= W * 2; x++) S('line', { x1: x * 50, y1: 0, x2: x * 50, y2: H * U, class: x % 2 ? 'g2' : 'g1' }, grid);
+  for (let y = 0; y <= H * 2; y++) S('line', { x1: 0, y1: y * 50, x2: W * U, y2: y * 50, class: y % 2 ? 'g2' : 'g1' }, grid);
+  // Maßstab
+  const sc = S('g', {}, svg); S('line', { x1: 30, y1: H * U - 30, x2: 130, y2: H * U - 30, class: 'thin' }, sc);
+  S('line', { x1: 30, y1: H * U - 42, x2: 30, y2: H * U - 18, class: 'thin' }, sc); S('line', { x1: 130, y1: H * U - 42, x2: 130, y2: H * U - 18, class: 'thin' }, sc);
+  const st = S('text', { x: 80, y: H * U - 44, 'text-anchor': 'middle', style: 'font-size:26px;fill:#8793a0' }, sc); st.textContent = '1 cm';
+  const L = {};
+  for (const n of ['fill', 'loc', 'obj', 'pv', 'aux', 'pts', 'lab', 'hot', 'top']) L[n] = S('g', {}, svg);
+  const b = {
+    svg, W, H, layer: n => L[n], clear: n => { L[n].innerHTML = ''; },
+    seg(a, c, cls = 'giv', ly = 'obj') { return S('line', { x1: a.x * U, y1: a.y * U, x2: c.x * U, y2: c.y * U, class: cls }, L[ly]); },
+    line(l, cls = 'giv', ly = 'obj', anim) { const a = V.add(l.p, V.mul(l.d, -40)), c = V.add(l.p, V.mul(l.d, 40)); const e = b.seg(a, c, cls, ly); if (anim) { e.setAttribute('pathLength', 1); e.classList.add('anim'); } return e; },
+    ray(p, d, cls = 'giv', ly = 'obj') { return b.seg(p, V.add(p, V.mul(V.unit(d), 40)), cls, ly); },
+    circle(c, r, cls = 'k', ly = 'loc', anim) { const e = S('circle', { cx: c.x * U, cy: c.y * U, r: r * U, class: cls }, L[ly]); if (anim) { e.setAttribute('pathLength', 1); e.classList.add('anim'); } return e; },
+    poly(pts, cls = 'tri', ly = 'obj') { return S('polygon', { points: pts.map(p => p.x * U + ',' + p.y * U).join(' '), class: cls }, L[ly]); },
+    dot(p, label, cls = '', off, tcls = '') { const e = S('circle', { cx: p.x * U, cy: p.y * U, r: 11, class: 'dot ' + cls }, L.pts); if (label) b.text(V.add(p, off || { x: .22, y: -.22 }), label, tcls); return e; },
+    text(p, str, cls = '', ly = 'lab') { const t = S('text', { x: p.x * U, y: p.y * U, class: 'h ' + cls }, L[ly]); t.innerHTML = str; return t; },
+    hot(p, ly = 'hot') { return S('circle', { cx: p.x * U, cy: p.y * U, r: 46, class: 'hot' }, L[ly]); },
+    rightAngle(p, d1, d2, ly = 'aux') { // rechter Winkel: Viertelkreis mit Punkt (deutsche Schreibweise)
+      const r = .38, u = V.unit(d1), v = V.unit(d2), a = V.add(p, V.mul(u, r)), c = V.add(p, V.mul(v, r)), sweep = V.cross(u, v) > 0 ? 1 : 0;
+      const m = V.add(p, V.mul(V.unit(V.add(u, v)), r * .45)), g = S('g', {}, L[ly]);
+      S('path', { d: `M${a.x * U} ${a.y * U} A${r * U} ${r * U} 0 0 ${sweep} ${c.x * U} ${c.y * U}`, class: 'thin' }, g);
+      S('circle', { cx: m.x * U, cy: m.y * U, r: 5.5, style: 'fill:#8793a0;stroke:none' }, g);
+      return g;
+    },
+    arc(c, r, a0, a1, cls = 'thin', ly = 'aux') { // Winkel in Grad, mathematisch (gegen den Uhrzeigersinn)
+      const p0 = V.add(c, V.mul(V.ang(a0), r)), p1 = V.add(c, V.mul(V.ang(a1), r)), big = Math.abs(a1 - a0) > 180 ? 1 : 0;
+      return S('path', { d: `M${p0.x * U} ${p0.y * U} A${r * U} ${r * U} 0 ${big} ${a1 > a0 ? 0 : 1} ${p1.x * U} ${p1.y * U}`, class: cls }, L[ly]);
+    },
+    pos(ev) { const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY; const q = pt.matrixTransform(svg.getScreenCTM().inverse()); return { x: q.x / U, y: q.y / U }; },
+    inside(p, m = .4) { return p.x > m && p.y > m && p.x < W - m && p.y < H - m; }
+  };
+  return b;
+}
+function lineLabel(b, l, name, t = 5, cls = '') { b.text(V.add(V.add(l.p, V.mul(l.d, t)), V.mul(V.perp(l.d), -.3)), name, cls); }
+
+/* ---------- Fotos: verkleinern und an Google Drive senden ---------- */
+function compress(file, max = 1600, q = .72) {
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onload = () => {
+      const s = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * s); c.height = Math.round(img.naturalHeight * s);
+      const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', q));
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('bild')); };
+    img.src = url;
+  });
+}
+const pendKey = () => LS + ':fotos:' + String(ST.user.u).toLowerCase();
+function pendGet() { try { return JSON.parse(localStorage.getItem(pendKey())) || {}; } catch (e) { return {}; } }
+function pendSet(m) { try { if (Object.keys(m).length) localStorage.setItem(pendKey(), JSON.stringify(m)); else localStorage.removeItem(pendKey()); return true; } catch (e) { return false; } }
+let fotoBusy = false;
+async function sendFoto(key, data) {
+  if (!SERVER_URL) { ST.fotos[key] = { t: Date.now(), lokal: 1 }; save(); return 'local'; }
+  let r = null;
+  try { r = await api({ action: 'photo', u: ST.user.u, p: ST.user.pin, app: CONFIG.APP_ID, titel: CONFIG.TITEL, link: PAGE_LINK, key, data, sum: summary() }); } catch (e) { r = null; }
+  const m = pendGet();
+  if (r && r.ok) { ST.fotos[key] = { id: r.id, t: Date.now() }; delete m[key]; pendSet(m); save(); return 'ok'; }
+  if (r && r.ok === false) return 'Der Server hat das Foto nicht angenommen (' + (r.err || 'Fehler') + '). Frage deine Lehrkraft.';
+  m[key] = data; return pendSet(m) ? 'later' : 'Kein Internet – und auf dem Gerät ist kein Platz für das Foto. Versuche es später noch einmal.';
+}
+async function retryFotos() {
+  if (!ST || !SERVER_URL || fotoBusy) return; const m = pendGet(), ks = Object.keys(m); if (!ks.length) return;
+  fotoBusy = true;
+  try { for (const k of ks) { if (await sendFoto(k, m[k]) === 'ok') award(k + '.2'); else break; } } finally { fotoBusy = false; }
+}
+setInterval(retryFotos, 30000);
+window.addEventListener('online', retryFotos);
+
+
+/* =====================================================================
+   KAROPAPIER-BRETT  (1 Kästchen = 1 Einheit, wie im Heft: 2 Kästchen = 1 cm)
+   ===================================================================== */
+const KS = 40;
+function Karo(host, W, H, opt = {}) {
+  const svg = S('svg', { viewBox: `0 0 ${W * KS} ${H * KS}`, class: 'board karo' + (opt.plain ? ' plain' : '') }); host.append(svg);
+  if (!opt.plain) { const gr = S('g', {}, svg); for (let x = 0; x <= W; x++) S('line', { x1: x * KS, y1: 0, x2: x * KS, y2: H * KS, class: 'kg' }, gr); for (let y = 0; y <= H; y++) S('line', { x1: 0, y1: y * KS, x2: W * KS, y2: y * KS, class: 'kg' }, gr); }
+  const L = {}; for (const n of ['fill', 'obj', 'aux', 'res', 'pts', 'lab', 'hot', 'top']) L[n] = S('g', {}, svg);
+  const P = p => `${p.x * KS} ${p.y * KS}`;
+  const k = {
+    svg, W, H, L, clear: n => { L[n].innerHTML = ''; },
+    seg(a, b, cls = 'kl', ly = 'obj') { return S('path', { d: `M${P(a)}L${P(b)}`, class: cls }, L[ly]); },
+    line(p, d, cls = 'kl', ly = 'obj') { const u = V.unit(d); return k.seg(V.add(p, V.mul(u, -60)), V.add(p, V.mul(u, 60)), cls, ly); },
+    poly(pts, cls = 'kp', ly = 'obj') { return S('polygon', { points: pts.map(q => q.x * KS + ',' + q.y * KS).join(' '), class: cls }, L[ly]); },
+    pline(pts, cls = 'kl', ly = 'obj') { return S('polyline', { points: pts.map(q => q.x * KS + ',' + q.y * KS).join(' '), class: cls }, L[ly]); },
+    circle(c, r, cls = 'kl', ly = 'obj') { return S('circle', { cx: c.x * KS, cy: c.y * KS, r: r * KS, class: cls }, L[ly]); },
+    dot(p, lab, cls = '', off, ly = 'pts') { const e = S('circle', { cx: p.x * KS, cy: p.y * KS, r: 6.5, class: 'kd ' + cls }, L[ly]); if (lab) k.text(V.add(p, off || { x: .22, y: -.28 }), lab, cls ? 'c-' + cls : ''); return e; },
+    text(p, s, cls = '', ly = 'lab') { const t = S('text', { x: p.x * KS, y: p.y * KS, class: 'kt ' + cls }, L[ly]); t.innerHTML = s; return t; },
+    lab(p, d, s, t = 4.6, cls = '') { // Beschriftung einer Geraden – immer sichtbar im Bild
+      const u = V.unit(d), at = tt => V.add(V.add(p, V.mul(u, tt)), V.mul(V.perp(u), -.45)), ok = q => q.x > .4 && q.y > .7 && q.x < W - .6 && q.y < H - .3;
+      const tt = [t, -t, t * .75, -t * .75, t * .55, -t * .55, 1.6, -1.6].find(x => ok(at(x))); k.text(at(tt == null ? t : tt), s, cls); },
+    ra(F, d1, d2, ly = 'aux', cls = 'kra') { // rechter Winkel: Viertelkreis mit Punkt
+      const r = .72, u = V.unit(d1), v = V.unit(d2), a = V.add(F, V.mul(u, r)), c = V.add(F, V.mul(v, r)), m = V.add(F, V.mul(V.unit(V.add(u, v)), r * .45)), g = S('g', { class: cls }, L[ly]);
+      S('path', { d: `M${P(a)}A${r * KS} ${r * KS} 0 0 ${V.cross(u, v) > 0 ? 1 : 0} ${P(c)}` }, g); S('circle', { cx: m.x * KS, cy: m.y * KS, r: 3.2 }, g); return g;
+    },
+    ring(p, cls = 'kring') { return S('circle', { cx: p.x * KS, cy: p.y * KS, r: 15, class: cls }, L.hot); },
+    pos(e) { const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY; const q = pt.matrixTransform(svg.getScreenCTM().inverse()); return { x: q.x / KS, y: q.y / KS }; },
+    tap(fn) {
+      svg.classList.add('tappable');
+      svg.addEventListener('pointerdown', e => {
+        const q = k.pos(e), g = { x: Math.round(q.x), y: Math.round(q.y) };
+        if (g.x < 0 || g.y < 0 || g.x > W || g.y > H || Math.hypot(q.x - g.x, q.y - g.y) > .48) return;
+        e.preventDefault(); fn(g);
+      });
+    }
+  };
+  return k;
+}
+const eq = (a, b) => a.x === b.x && a.y === b.y;
+const I = (x, y) => ({ x, y });
+const inK = (p, W = 12, H = 8, m = 1) => p.x >= m && p.y >= m && p.x <= W - m && p.y <= H - m;
+const icross = (a, b) => a.x * b.y - a.y * b.x, idot = (a, b) => a.x * b.x + a.y * b.y;
+const iperp = d => I(-d.y, d.x);
+const DIRS = [[1, 0], [0, 1], [1, 1], [1, -1], [2, 1], [1, 2], [2, -1], [1, -2], [3, 1], [1, 3], [3, -1], [1, -3], [3, 2], [2, 3], [3, -2], [2, -3]].map(([x, y]) => I(x, y));
+function near90(d) { return DIRS.filter(e => idot(d, e) !== 0 && Math.abs(idot(d, e)) / (V.len(d) * V.len(e)) < .36); }
+/* Richtung in Kästchen beschreiben: „2 nach rechts und 1 nach oben" */
+function desc(d) {
+  if (d.x < 0 || (d.x === 0 && d.y > 0)) d = I(-d.x, -d.y);
+  const p = []; if (d.x) p.push(`${d.x} nach rechts`); if (d.y < 0) p.push(`${-d.y} nach oben`); if (d.y > 0) p.push(`${d.y} nach unten`);
+  return p.join(' und ');
+}
+const PRAISE = ['Super!', 'Klasse!', 'Stark!', 'Genau!', 'Prima!', 'Toll!', 'Sehr gut!', 'Perfekt!'];
+
+/* =====================================================================
+   ÜBUNGSRUNDE: Aufgaben nacheinander, Fehler werden markiert und gezählt.
+   0 Fehler = ⭐⭐⭐ · 1–2 Fehler = ⭐⭐ · mehr Fehler = ⭐
+   ===================================================================== */
+function awardN(id, k) {
+  let n = 0; for (let i = 1; i <= k; i++) if (!ST.stars[id + '.' + i]) { ST.stars[id + '.' + i] = 1; n++; }
+  if (n) { save(); const t = $('#toast'); t.textContent = '⭐ +' + n + (n > 1 ? ' Sterne!' : ' Stern!'); t.classList.remove('show'); void t.offsetWidth; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2000); }
+  return n;
+}
+function taskNav(t) {
+  const st = STATIONS.find(s => s.tasks.includes(t)), i = st.tasks.indexOf(t), nx = st.tasks[i + 1];
+  return el('div', { class: 'row', style: 'justify-content:center' },
+    el('button', { class: 'btn sec', html: '↻ Noch einmal', onclick: () => runTask(st.id, t.id) }),
+    nx ? el('button', { class: 'btn', html: 'Nächste Aufgabe →', onclick: () => runTask(st.id, nx.id) }) : el('button', { class: 'btn', html: 'Zur Übersicht →', onclick: showHome }),
+    el('button', { class: 'btn sec', html: '← ' + st.title, onclick: () => showStation(st.id) }));
+}
+function runRound(host, t, cfg) {
+  const exam = !!cfg.exam;
+  let queue = []; for (let i = 0; i < cfg.n; i++) queue.push(cfg.make(i));
+  let errs = 0, streak = 0, results = [];
+  const bar = el('div', { class: 'bar' }, el('i')), pills = el('div', { class: 'row', style: 'gap:.4rem' });
+  const hudBox = el('div', { class: 'hud' }, el('div', { style: 'flex:1;min-width:160px' }, el('div', { class: 'prog' }), bar), pills);
+  const stage = el('div');
+  if (cfg.intro) host.append(el('div', { class: 'card', style: 'margin-bottom:.7rem', html: T(cfg.intro) }));
+  host.append(hudBox, stage);
+  function hud() {
+    const done = results.length, all = done + queue.length + (cur && !cur.over ? 1 : 0);
+    hudBox.querySelector('.prog').innerHTML = `Aufgabe ${Math.min(done + 1, all)} von ${all}` + (exam ? '' : ` <span class="dotsrow">${results.map(r => `<i class="${r.ok ? 'g' : 'r'}"></i>`).join('')}</span>`);
+    bar.firstChild.style.width = (100 * done / Math.max(1, all)) + '%';
+    pills.innerHTML = (exam ? `<span class="pill2">✅ ${results.filter(r => r.ok).length}</span>` : '') + `<span class="pill2 ${errs ? 'bad' : ''}">❌ ${errs} Fehler</span>` + (streak >= 3 ? `<span class="pill2 fire">🔥 ${streak} richtig hintereinander</span>` : '');
+  }
+  let cur = null;
+  function next() {
+    if (!queue.length) return finish();
+    const it = queue.shift(); cur = it; it.over = false; stage.innerHTML = '';
+    let itemErr = 0;
+    const fb = el('div', { class: 'fb' }), nav = el('div', { class: 'row' }); let mounted = false;
+    const box = el('div', { class: 'card item' }); stage.append(box);
+    const R = {
+      exam, tries: () => itemErr,
+      mount(panel) { panel.append(fb, nav); mounted = true; },
+      wrong(h, final) {
+        if (it.over) return; itemErr++; errs++; streak = 0; miss();
+        fb.className = 'fb err'; fb.innerHTML = T('❌ ' + h); hud();
+        if (final || exam) end(false);
+      },
+      right(h) { if (it.over) return; fb.className = 'fb ok'; fb.innerHTML = T('✅ ' + (itemErr ? 'Jetzt stimmt es. ' : pick(PRAISE) + ' ') + (h || '')); end(itemErr === 0); },
+      info(h) { if (!it.over) { fb.className = 'fb info'; fb.innerHTML = T(h); } }
+    };
+    function end(ok) {
+      it.over = true; if (ok) streak++;
+      results.push({ it, ok });
+      if (!ok && !exam && !it.requeued) { const c = it.again ? it.again() : it; c.requeued = true; queue.push(c); fb.innerHTML += '<div class="again">↻ Diese Art von Aufgabe kommt am Ende noch einmal.</div>'; }
+      if (exam && !ok && it.sol) fb.innerHTML += '<div style="font-weight:500;margin-top:.3rem">' + T(it.sol) + '</div>';
+      hud();
+      const w = el('button', { class: 'btn', html: queue.length ? 'Weiter →' : 'Ergebnis ansehen →', onclick: next });
+      nav.innerHTML = ''; nav.append(w); w.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    it.show(box, R);
+    if (!mounted) box.append(fb, nav);
+    hud(); window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  function finish() {
+    stage.innerHTML = ''; hudBox.remove();
+    const ok = results.filter(r => r.ok).length;
+    let k, title, msg;
+    if (exam) {
+      k = ok >= 11 ? 3 : ok >= 9 ? 2 : ok >= 7 ? 1 : 0; ST.best = Math.max(ST.best || 0, ok);
+      title = ok >= 11 ? '🏆 Super – du bist fit in Geometrie!' : ok >= 9 ? '👍 Gut gemacht!' : ok >= 7 ? '🙂 Schon ganz gut!' : '💪 Übe noch ein bisschen!';
+      msg = `<span class="big">${ok} von ${results.length}</span> Aufgaben richtig.`;
+    } else {
+      k = errs === 0 ? 3 : errs <= 2 ? 2 : 1;
+      title = errs === 0 ? '🏆 Fehlerfrei! Perfekt!' : errs <= 2 ? '👍 Gut gemacht!' : '💪 Geschafft!';
+      msg = `<span class="big">${errs === 0 ? 'Kein Fehler' : errs + (errs === 1 ? ' Fehler' : ' Fehler')}</span>`;
+    }
+    const isNew = k ? awardN(t.id, k) : 0, have = starsOf(t);
+    const card = el('div', { class: 'card cert' },
+      el('h2', title), el('p', { html: msg }), el('div', { class: 'bigstars', html: starRow(k, 3) }),
+      el('p', { class: 'mut', html: exam ? '7 richtig = ⭐ · 9 richtig = ⭐⭐ · 11 richtig = ⭐⭐⭐' : '0 Fehler = ⭐⭐⭐ · 1–2 Fehler = ⭐⭐ · mehr Fehler = ⭐' }),
+      el('p', { html: have < 3 ? `<b>Schaffst du es ${exam ? 'noch besser' : 'ohne Fehler'}? Dann bekommst du ${3 - have === 1 ? 'den letzten Stern' : 'mehr Sterne'}!</b>` : (isNew ? '<b>Neue Sterne! 🎉</b>' : 'Du hast hier schon alle 3 Sterne. 🌟') }));
+    const wrong = results.filter(r => !r.ok);
+    if (exam && wrong.length) {
+      const names = [...new Set(wrong.map(r => r.it.st).filter(Boolean))];
+      card.append(el('div', { class: 'box', style: 'text-align:left', html: '<b>Das übst du noch einmal:</b><ul>' + names.map(n => `<li>${n}</li>`).join('') + '</ul>' }));
+    }
+    card.append(taskNav(t));
+    stage.append(card); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  next();
+}
+
+/* ---------- Bausteine für Aufgaben ---------- */
+function twoCol(box) { const l = el('div'), r = el('div', { class: 'panel' }); box.append(el('div', { class: 'two' }, l, r)); return [l, r]; }
+/* Auswahl: opts = [{t, ok}] ; expl = Erklärung (für richtig und falsch) */
+function choose(panel, q, opts, R, o = {}) {
+  panel.append(el('div', { class: 'q', html: T(q) }));
+  const list = el('div', { class: 'opts' + (o.row ? ' rowopts' : '') }); let lock = false;
+  (o.keep ? opts : shuffle(opts)).forEach(op => {
+    const b = el('button', { class: 'opt', html: op.t }); list.append(b);
+    b.addEventListener('click', () => {
+      if (lock) return; lock = true;
+      if (op.ok) { b.classList.add('right'); o.after && o.after(true); R.right(o.expl || ''); }
+      else { b.classList.add('wrong'); [...list.children].forEach(x => { if (x._ok) x.classList.add('right'); }); o.after && o.after(false); R.wrong((op.why ? op.why + ' ' : '') + (o.expl || 'Die richtige Antwort ist grün.'), true); }
+    });
+    b._ok = !!op.ok;
+  });
+  panel.append(list); return list;
+}
+const WF = (q, yes, R, panel, expl, after) => choose(panel, q, [{ t: '✔ wahr', ok: yes }, { t: '✘ falsch', ok: !yes }], R, { keep: true, row: true, expl, after });
+/* Auf einen Gitterpunkt tippen. ok(p) prüft; hint(p) gibt Tipp; after 2 Fehlern wird die Lösung gezeigt. */
+function tapPoint(k, R, o) {
+  let wrongs = 0, done = false, rr = null;
+  const handler = p => {
+    if (done || R.over) return;
+    if (o.ok(p)) { done = true; k.clear('hot'); o.onOk(p); return; }
+    wrongs++; k.clear('hot'); const m = k.ring(p, 'kring bad'); setTimeout(() => m.remove(), 900);
+    R.wrong(o.hint(p), R.exam);
+    if (R.exam) { done = true; o.onFail && o.onFail(); return; }
+    if (wrongs >= 2 && o.sol) { rr = k.ring(o.sol, 'kring sol'); R.info('Tipp: Tippe auf den blinkenden Punkt.'); }
+  };
+  o.k = k; k._tap = handler; if (!k._tapOn) { k._tapOn = true; k.tap(p => k._tap(p)); }
+}
+
+/* =====================================================================
+   STATION 1 – ORTHOGONALE GERADEN
+   ===================================================================== */
+const S0 = I(6, 4);
+function itOrthoCheck() {
+  const d1 = pick(DIRS), yes = Math.random() < .5, d2 = yes ? iperp(d1) : pick(near90(d1));
+  return { st: 'Station 1: Orthogonale Geraden', again: itOrthoCheck, sol: yes ? 'Lösung: g ⊥ h.' : 'Lösung: g und h sind nicht orthogonal.',
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8);
+      k.line(S0, d1, 'kl c1'); k.line(S0, d2, 'kl c2'); k.lab(S0, d1, 'g', 4.4, 'c-c1'); k.lab(S0, d2, 'h', 3.4, 'c-c2'); k.dot(S0);
+      const p = iperp(d1);
+      choose(r, 'Sind die Geraden g und h <b>orthogonal</b>?', [{ t: 'Ja: g ⊥ h', ok: yes }, { t: 'Nein: g und h sind nicht orthogonal.', ok: !yes }], R, { keep: true,
+        expl: `Kästchen-Trick: g geht ${desc(d1)}. Eine Orthogonale geht ${desc(p)} (Zahlen tauschen, eine Richtung umdrehen).` + (yes ? ' Genau so geht h.' : ` Aber h geht ${desc(d2)}.`),
+        after() { if (yes) k.ra(S0, d1, d2); else { k.line(S0, p, 'kl ghost', 'aux'); k.ra(S0, d1, p, 'aux', 'kra ghostra'); } } });
+      R.mount(r);
+    } };
+}
+function itTapLine(par) {
+  const make = () => {
+    for (let n = 0; n < 200; n++) {
+      const d = pick(DIRS), A = I(5 + Math.floor(Math.random() * 3), 3 + Math.floor(Math.random() * 3)), P = I(1 + Math.floor(Math.random() * 10), 1 + Math.floor(Math.random() * 6));
+      const g = Ln(A, d), dd = dLine(P, g); if (dd < 1.4 || dd > 3.6) continue;
+      const step = par ? d : iperp(d); let sol = null;
+      for (const s of [1, -1, 2, -2]) { const Q = I(P.x + s * step.x, P.y + s * step.y); if (inK(Q, 12, 8, 0)) { sol = Q; break; } }
+      if (sol) return { d, A, P, sol };
+    }
+  };
+  const it = { st: par ? 'Station 4: Parallele Geraden' : 'Station 1: Orthogonale Geraden', again: () => itTapLine(par),
+    show(box, R) {
+      const { d, A, P, sol } = make(), [l, r] = twoCol(box), k = Karo(l, 12, 8);
+      k.line(A, d, 'kl c1'); k.lab(A, d, 'g', -4.5, 'c-c1'); k.dot(P, 'P', 'acc');
+      const step = par ? d : iperp(d);
+      r.append(el('div', { class: 'q', html: T(par ? 'Zeichne durch den Punkt P die <b>Parallele</b> zu g.' : 'Zeichne durch den Punkt P die <b>Orthogonale</b> zu g.') }),
+        el('div', { class: 'box', html: T('👆 Tippe auf einen zweiten Gitterpunkt. Die Gerade geht dann durch P und diesen Punkt.') }));
+      const tmp = { e: null };
+      tapPoint(k, R, {
+        sol, ok: Q => !eq(Q, P) && (par ? icross(V.sub(Q, P), d) === 0 : idot(V.sub(Q, P), d) === 0),
+        hint: Q => { if (eq(Q, P)) return 'Das ist der Punkt P selbst. Tippe auf einen <b>anderen</b> Punkt.'; if (tmp.e) tmp.e.remove(); tmp.e = k.line(P, V.sub(Q, P), 'kl wrongline', 'aux'); setTimeout(() => { if (tmp.e) tmp.e.remove(); }, 1200);
+          return `Diese Gerade ist nicht ${par ? 'parallel' : 'orthogonal'} zu g. Tipp: g geht ${desc(d)}. ${par ? 'Die Parallele geht genauso' : 'Die Orthogonale geht ' + desc(step)}.`; },
+        onOk(Q) {
+          k.line(P, V.sub(Q, P), 'kl res'); k.dot(Q, '', 'acc');
+          if (!par) { const F = xLL(Ln(A, d), Ln(P, step)); k.ra(F, d, V.sub(P, F)); }
+          R.right(par ? `Die Parallele geht wie g: ${desc(d)}.` : `Die Orthogonale geht ${desc(step)}. Den rechten Winkel markiert man mit einem Viertelkreis mit Punkt.`);
+        }
+      });
+      R.mount(r);
+    } };
+  return it;
+}
+const RULES_ORTHO = [
+  ['g ⊥ h und h ⊥ k. Dann gilt …', 'g ∥ k', ['g ⊥ k', 'g = h'], 'Zwei Geraden, die beide orthogonal zu h sind, sind parallel zueinander.'],
+  ['g ∥ h und h ⊥ k. Dann gilt …', 'g ⊥ k', ['g ∥ k', 'g = k'], 'k ist orthogonal zu h – und damit auch zu jeder Parallelen von h.'],
+  ['Zwei Geraden sind orthogonal. Wie groß ist der Winkel zwischen ihnen?', '90°', ['45°', '180°'], 'Orthogonal heißt: Sie bilden einen rechten Winkel (90°).'],
+  ['Wie markiert man einen rechten Winkel?', 'mit einem Viertelkreis mit Punkt', ['mit einem Kreuz', 'mit zwei Bögen'], 'Der rechte Winkel bekommt einen Viertelkreis mit einem Punkt darin.'],
+  ['Wie schreibt man: „g ist orthogonal zu h"?', 'g ⊥ h', ['g ∥ h', 'g = h'], '⊥ bedeutet orthogonal, ∥ bedeutet parallel.'],
+  ['Wie schreibt man: „g ist parallel zu h"?', 'g ∥ h', ['g ⊥ h', 'g ≈ h'], '∥ bedeutet parallel.'],
+  ['Zwei parallele Geraden …', 'schneiden sich nie.', ['schneiden sich in einem Punkt.', 'bilden einen rechten Winkel.'], 'Parallele Geraden haben überall den gleichen Abstand. Sie schneiden sich nie.'],
+  ['Mit welchem Teil des Geodreiecks prüfst du, ob g ⊥ h?', 'mit der Mittellinie', ['mit der Ecke oben', 'mit den Zahlen am Rand'], 'Lange Kante auf g, Mittellinie durch den Schnittpunkt: Liegt h auf der Mittellinie? Dann gilt g ⊥ h.']
+];
+function itRule(bank, st) {
+  const [q, a, w, ex] = pick(bank);
+  return { st, again: () => itRule(bank, st), sol: 'Lösung: ' + a,
+    show(box, R) { const c = el('div', { class: 'narrow' }); box.append(c); choose(c, q, [{ t: a, ok: true }, ...w.map(x => ({ t: x }))], R, { expl: ex }); R.mount(c); } };
+}
+
+/* =====================================================================
+   STATION 2 – ACHSENSPIEGELUNG
+   ===================================================================== */
+function axisMake(type) {
+  const t = type || pick(['v', 'h', 'd1', 'd2']);
+  if (t === 'v') return { t, p: I(6, 0), d: I(0, 1), f: P => I(12 - P.x, P.y), side: P => Math.sign(P.x - 6), dist: P => Math.abs(P.x - 6), n: I(1, 0), unit: 'Kästchen' };
+  if (t === 'h') return { t, p: I(0, 4), d: I(1, 0), f: P => I(P.x, 8 - P.y), side: P => Math.sign(P.y - 4), dist: P => Math.abs(P.y - 4), n: I(0, 1), unit: 'Kästchen' };
+  if (t === 'd1') return { t, p: I(6, 4), d: I(1, 1), f: P => I(P.y + 2, P.x - 2), side: P => Math.sign(P.y - P.x + 2), dist: P => Math.abs(P.y - P.x + 2) / 2, n: I(-1, 1), unit: 'Kästchen-Diagonalen' };
+  return { t, p: I(6, 4), d: I(1, -1), f: P => I(10 - P.y, 10 - P.x), side: P => Math.sign(P.x + P.y - 10), dist: P => Math.abs(P.x + P.y - 10) / 2, n: I(1, 1), unit: 'Kästchen-Diagonalen' };
+}
+const rint = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+function randPt(ax, okFn) { for (let n = 0; n < 500; n++) { const P = I(rint(1, 11), rint(1, 7)); if (ax.dist(P) >= 1 && Number.isInteger(ax.dist(P)) && inK(ax.f(P)) && (!okFn || okFn(P))) return P; } return null; }
+function itMirrorCheck() {
+  const ax = axisMake(), P = randPt(ax, Q => ax.dist(Q) <= 4), C = ax.f(P), kind = pick(['ok', 'ok', 'dist', 'shift']);
+  let Q = C, why = '';
+  if (kind === 'dist') { const s = pick([1, -1]); Q = I(C.x + s * ax.n.x * ax.side(C), C.y + s * ax.n.y * ax.side(C)); if (!inK(Q) || ax.side(Q) !== ax.side(C) || ax.dist(Q) === 0) Q = I(C.x + ax.n.x * ax.side(C), C.y + ax.n.y * ax.side(C)); why = `P ist ${ax.dist(P)} ${ax.unit} von g entfernt, P' aber ${ax.dist(Q)}.`; }
+  if (kind === 'shift') { const s = pick([1, -1]), sh = ax.t === 'v' || ax.t === 'h' ? ax.d : I(ax.d.x, ax.d.y); Q = I(C.x + s * sh.x, C.y + s * sh.y); if (!inK(Q)) Q = I(C.x - s * sh.x, C.y - s * sh.y); why = 'P\' ist zur Seite verschoben. Die Strecke PP\' ist nicht orthogonal zu g.'; }
+  const yes = eq(Q, C);
+  return { st: 'Station 2: Achsenspiegelung', again: itMirrorCheck, sol: yes ? 'Lösung: richtig gespiegelt.' : 'Lösung: falsch. ' + why,
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8);
+      k.line(ax.p, ax.d, 'kl axis'); k.lab(ax.p, ax.d, 'g', ax.t === 'v' ? .8 : ax.t === 'h' ? 11 : 4, 'c-axis');
+      k.dot(P, 'P', 'acc'); k.dot(Q, "P'", 'c2');
+      WF("Ist P' das Spiegelbild von P an der Geraden g?", yes, R, r, yes ? `Richtig gespiegelt: PP' ist orthogonal zu g, und P und P' haben beide den Abstand ${ax.dist(P)} ${ax.unit} von g.` : why + ' Der richtige Bildpunkt ist grün.',
+        () => { const F = V.mid(P, C); k.seg(P, C, 'kl help', 'aux'); k.ra(F, ax.d, V.sub(P, F)); if (!yes) k.dot(C, '', 'ok'); });
+      R.mount(r);
+    } };
+}
+const NAMES = ['A', 'B', 'C', 'D', 'E'];
+function figFor(ax, n, f) {
+  for (let t = 0; t < 2000; t++) {
+    const pts = []; const s = pick([1, -1]);
+    for (let i = 0; i < n; i++) { const p = randPt(ax, Q => ax.side(Q) === s && ax.dist(Q) <= 4 && inK(f(Q))); if (!p) break; pts.push(p); }
+    if (pts.length < n) continue;
+    if (n > 1 && (!apartI(pts) || polyArea(pts) < 3)) continue;
+    return pts;
+  }
+}
+const apartI = pts => pts.every((p, i) => pts.every((q, j) => i === j || V.dist(p, q) >= 2));
+const polyArea = pts => Math.abs(pts.reduce((s, p, i) => s + icross(p, pts[(i + 1) % pts.length]), 0)) / 2;
+function sortCCW(pts) { const c = pts.reduce((a, p) => V.add(a, V.mul(p, 1 / pts.length)), I(0, 0)); return pts.slice().sort((a, b) => Math.atan2(c.y - a.y, a.x - c.x) - Math.atan2(c.y - b.y, b.x - c.x)); }
+/* Figur spiegeln (Achse oder Punkt): nacheinander auf A', B', C' tippen */
+function mirrorTapItem(o) {
+  return { st: o.st, again: o.again, sol: o.sol,
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8); o.draw(k);
+      const pts = sortCCW(o.pts), img = pts.map(o.f);
+      k.poly(pts, 'kp c1'); const cen = V.mul(pts.reduce((a, p) => V.add(a, p), I(0, 0)), 1 / pts.length); pts.forEach((p, i) => k.dot(p, NAMES[i], '', pts.length > 1 ? V.add(V.mul(V.unit(V.sub(p, cen)), .55), I(-.15, .2)) : I(.25, -.3)));
+      r.append(el('div', { class: 'q', html: T(o.q) }));
+      const stepEl = el('div', { class: 'box' }); r.append(stepEl);
+      let i = 0;
+      const ask = () => { stepEl.innerHTML = T(`👆 Tippe auf den Bildpunkt <b>${NAMES[i]}'</b>.` + (o.tip ? '<br><span class="mut">' + o.tip(pts[i], NAMES[i]) + '</span>' : '')); tapPoint(k, R, {
+        sol: img[i], ok: Q => eq(Q, img[i]), hint: Q => o.hint(pts[i], Q, img[i], NAMES[i]),
+        onFail() { finish(false); },
+        onOk(Q) { k.dot(Q, NAMES[i] + "'", 'c2'); o.help && o.help(k, pts[i], Q); i++; if (i < pts.length) ask(); else finish(true); } }); };
+      const finish = ok => { k.poly(img, 'kp c2'); if (ok) { stepEl.innerHTML = T('Alle Bildpunkte sind richtig. Verbinde sie: fertig ist die Bildfigur!'); R.right(o.done || ''); } else { img.forEach((Q, j) => k.dot(Q, NAMES[j] + "'", 'ok')); } };
+      ask(); R.mount(r);
+    } };
+}
+function itMirrorFig(exam) {
+  const n = exam ? 1 : pick([3, 3, 4]); let ax = axisMake(), pts = figFor(ax, n, ax.f); if (!pts) { ax = axisMake('v'); pts = figFor(ax, n, ax.f); }
+  return mirrorTapItem({ st: 'Station 2: Achsenspiegelung', again: () => itMirrorFig(exam), pts, f: ax.f,
+    q: exam ? '<b>Spiegle</b> den Punkt A an der Geraden g.' : '<b>Spiegle</b> die Figur an der Geraden g.',
+    draw(k) { k.line(ax.p, ax.d, 'kl axis'); k.lab(ax.p, ax.d, 'g', ax.t === 'v' ? .8 : ax.t === 'h' ? 11 : 4, 'c-axis'); },
+    tip: ax.t[0] === 'd' ? () => 'Zähle die Kästchen-Diagonalen bis zur Achse.' : () => 'Zähle die Kästchen bis zur Achse.',
+    hint(P, Q, C, n) { const a = ax.dist(P); if (ax.side(Q) === ax.side(P)) return `${n}' liegt auf der <b>anderen</b> Seite von g.`; if (ax.dist(Q) !== a) return `${n} ist ${a} ${ax.unit} von g entfernt. ${n}' muss genauso weit entfernt sein.`; return `Der Punkt ist zur Seite verschoben. ${n}${n}' muss orthogonal zu g sein.`; },
+    help(k, P, Q) { k.seg(P, Q, 'kl help', 'aux'); },
+    sol: 'Lösung: Der Bildpunkt hat auf der anderen Seite den gleichen Abstand zu g.', done: 'Jeder Bildpunkt hat den gleichen Abstand zu g wie sein Punkt.' });
+}
+
+/* =====================================================================
+   STATION 3 – SYMMETRIEACHSEN
+   ===================================================================== */
+const regular = (n, r, c = I(6, 4), rot = -90) => Array.from({ length: n }, (_, i) => V.add(c, V.mul(V.ang(-(rot + 360 * i / n)), r)));
+const SHAPES = [
+  { n: 'Quadrat', pts: [I(4, 2), I(8, 2), I(8, 6), I(4, 6)], ax: 4, axes: [[I(6, 4), I(0, 1)], [I(6, 4), I(1, 0)], [I(6, 4), I(1, 1)], [I(6, 4), I(1, -1)]], ps: true },
+  { n: 'Rechteck', pts: [I(3, 2.5), I(9, 2.5), I(9, 5.5), I(3, 5.5)], ax: 2, axes: [[I(6, 4), I(0, 1)], [I(6, 4), I(1, 0)]], ps: true },
+  { n: 'Raute', pts: [I(6, 1), I(9, 4), I(6, 7), I(3, 4)], ax: 2, axes: [[I(6, 4), I(0, 1)], [I(6, 4), I(1, 0)]], ps: true },
+  { n: 'Parallelogramm', pts: [I(2, 6), I(8, 6), I(10, 2), I(4, 2)], ax: 0, axes: [], ps: true, why: 'Beim Falten passen die Hälften nicht aufeinander – auch nicht an den Diagonalen.' },
+  { n: 'Drachen', pts: [I(6, 1), I(8, 3), I(6, 7), I(4, 3)], ax: 1, axes: [[I(6, 4), I(0, 1)]], ps: false },
+  { n: 'gleichschenkliges Trapez', pts: [I(2, 6), I(10, 6), I(8, 2), I(4, 2)], ax: 1, axes: [[I(6, 4), I(0, 1)]], ps: false },
+  { n: 'Trapez', pts: [I(2, 6), I(10, 6), I(9, 2), I(3.5, 2)].map(p => p), ax: 0, axes: [], ps: false, fix: [I(2, 6), I(10, 6), I(9, 2), I(5, 2)] },
+  { n: 'gleichseitiges Dreieck', pts: regular(3, 3.2, I(6, 4.5)), ax: 3, axes: regular(3, 1, I(0, 0)).map(d => [I(6, 4.5), d]), ps: false },
+  { n: 'gleichschenkliges Dreieck', pts: [I(6, 1), I(9, 7), I(3, 7)], ax: 1, axes: [[I(6, 4), I(0, 1)]], ps: false },
+  { n: 'Dreieck', pts: [I(2, 7), I(10, 6), I(5, 1)], ax: 0, axes: [], ps: false },
+  { n: 'regelmäßiges Sechseck', pts: regular(6, 3.3, I(6, 4), 0), ax: 6, axes: regular(6, 1, I(0, 0), 0).slice(0, 3).map(d => [I(6, 4), d]).concat(regular(6, 1, I(0, 0), 30).slice(0, 3).map(d => [I(6, 4), d])), ps: true },
+  { n: 'Kreis', circle: true, ax: '∞', axes: regular(8, 1, I(0, 0), 0).slice(0, 4).map(d => [I(6, 4), d]), ps: true }
+];
+SHAPES.forEach(s => { if (s.fix) s.pts = s.fix; });
+const AXOPT = ['0', '1', '2', '3', '4', '6', 'unendlich viele'];
+function drawShape(k, s, cls = 'kp c1') { if (s.circle) { k.circle(I(6, 4), 3.2, cls); k.dot(I(6, 4)); } else k.poly(s.pts, cls); }
+function itAxes() {
+  const s = pick(SHAPES), right = s.ax === '∞' ? 'unendlich viele' : String(s.ax);
+  return { st: 'Station 3: Symmetrieachsen', again: itAxes, sol: `Lösung: ${right}.`,
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8); drawShape(k, s);
+      choose(r, 'Wie viele <b>Symmetrieachsen</b> hat die Figur?', AXOPT.map(t => ({ t, ok: t === right })), R, { keep: true, row: true,
+        expl: `Die Figur (${s.n}) hat ${right === '0' ? 'keine Symmetrieachse' : right === '1' ? 'eine Symmetrieachse' : right + ' Symmetrieachsen'}.` + (s.why ? ' ' + s.why : '') + (s.ax === '∞' ? ' Jede Gerade durch den Mittelpunkt ist eine Symmetrieachse.' : ''),
+        after() { s.axes.forEach(([p, d]) => k.line(p, d, 'kl axis anim2', 'res')); } });
+      R.mount(r);
+    } };
+}
+const LET = { A: 's', M: 's', T: 's', U: 's', V: 's', W: 's', Y: 's', B: 'w', C: 'w', D: 'w', E: 'w', K: 'w', H: 'b', I: 'b', O: 'b', X: 'b', F: 'n', G: 'n', L: 'n', N: 'n', P: 'n', R: 'n', S: 'n', Z: 'n' };
+const LETPS = { H: 1, I: 1, N: 1, O: 1, S: 1, X: 1, Z: 1 };
+function letterBoard(host, ch) {
+  const svg = S('svg', { viewBox: '0 0 300 300', class: 'board plainb' }); host.append(svg);
+  const g = S('g', { class: 'letg' }, svg); const t = S('text', { x: 150, y: 150 + .358 * 220, 'text-anchor': 'middle', class: 'letter' }, g); t.textContent = ch;
+  return { svg, g, axes(type) { const ax = S('g', {}, svg); if (type === 's' || type === 'b') S('line', { x1: 150, y1: 10, x2: 150, y2: 290, class: 'letax' }, ax); if (type === 'w' || type === 'b') S('line', { x1: 10, y1: 150, x2: 290, y2: 150, class: 'letax' }, ax); } };
+}
+function itLetter() {
+  const ch = pick(Object.keys(LET)), ty = LET[ch];
+  const opts = [['s', 'eine <b>senkrechte</b> Achse'], ['w', 'eine <b>waagrechte</b> Achse'], ['b', 'eine senkrechte <b>und</b> eine waagrechte Achse'], ['n', '<b>keine</b> Symmetrieachse']];
+  return { st: 'Station 3: Symmetrieachsen', again: itLetter, sol: 'Lösung: ' + opts.find(o => o[0] === ty)[1].replace(/<\/?b>/g, ''),
+    show(box, R) {
+      const [l, r] = twoCol(box), lb = letterBoard(l, ch);
+      choose(r, `Welche <b>Symmetrieachsen</b> hat der Buchstabe <b>${ch}</b>?`, opts.map(([k2, t]) => ({ t, ok: k2 === ty })), R, { keep: true,
+        expl: ty === 'n' ? `Der Buchstabe ${ch} ist nicht achsensymmetrisch.` + (LETPS[ch] ? ' Aber er ist punktsymmetrisch (→ Station 7).' : '') : `Faltest du ${ch} an der roten Linie, passen beide Hälften aufeinander.`,
+        after() { lb.axes(ty); } });
+      R.mount(r);
+    } };
+}
+/* Ergänzen zur achsensymmetrischen Figur (Achse senkrecht bei x = 6) */
+const HALF = [
+  [I(6, 1), I(9, 3), I(9, 7), I(6, 7)], [I(6, 1), I(10, 4), I(8, 4), I(8, 7), I(6, 7)], [I(6, 1), I(9, 4), I(7, 4), I(7, 7), I(6, 7)],
+  [I(6, 2), I(8, 1), I(9, 4), I(11, 3), I(10, 7), I(6, 7)], [I(6, 3), I(8, 1), I(10, 2), I(10, 4), I(6, 7)], [I(6, 1), I(7, 3), I(10, 3), I(8, 5), I(9, 7), I(6, 6)]
+];
+function itComplete() {
+  const base = pick(HALF), flip = Math.random() < .5, half = flip ? base.map(p => I(12 - p.x, p.y)) : base, f = p => I(12 - p.x, p.y);
+  const need = half.filter(p => p.x !== 6);
+  return { st: 'Station 3: Symmetrieachsen', again: itComplete,
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8);
+      k.line(I(6, 0), I(0, 1), 'kl axis'); k.pline(half, 'kl c1 thick');
+      r.append(el('div', { class: 'q', html: T('<b>Ergänze</b> zu einer achsensymmetrischen Figur. Die rote Linie ist die Symmetrieachse.') }));
+      const stepEl = el('div', { class: 'box' }); r.append(stepEl);
+      let i = 0;
+      const ask = () => {
+        const P = need[i]; k.clear('hot'); k.ring(P, 'kring cur');
+        stepEl.innerHTML = T(`👆 Der markierte Eckpunkt ist ${Math.abs(P.x - 6)} Kästchen von der Achse entfernt. Tippe auf seinen <b>Spiegelpunkt</b>. (${i + 1} von ${need.length})`);
+        tapPoint(k, R, { sol: f(P), ok: Q => eq(Q, f(P)), hint: Q => Q.y !== P.y ? 'Der Spiegelpunkt liegt auf gleicher Höhe (orthogonal zur Achse).' : `Zähle noch einmal: ${Math.abs(P.x - 6)} Kästchen auf der anderen Seite der Achse.`,
+          onFail() { k.pline(half.map(f), 'kl c2 thick'); },
+          onOk(Q) { k.dot(Q, '', 'c2'); i++; if (i < need.length) ask(); else { k.clear('hot'); k.pline(half.map(f), 'kl c2 thick'); stepEl.innerHTML = 'Fertig! Die Figur ist jetzt achsensymmetrisch. 🎉'; R.right('Beide Hälften passen beim Falten genau aufeinander.'); } } });
+      };
+      ask(); R.mount(r);
+    } };
+}
+
+/* =====================================================================
+   STATION 4 – PARALLELE GERADEN
+   ===================================================================== */
+function itRelation() {
+  const type = pick(['par', 'perp', 'none']), d1 = pick(DIRS);
+  let d2 = type === 'par' ? d1 : type === 'perp' ? iperp(d1) : pick(DIRS.filter(e => icross(e, d1) !== 0 && idot(e, d1) !== 0));
+  const A = I(rint(3, 5), rint(2, 3)), B = I(rint(7, 9), rint(5, 6));
+  const right = { par: 'g ∥ h', perp: 'g ⊥ h', none: 'weder ∥ noch ⊥' }[type];
+  return { st: 'Station 4: Parallele Geraden', again: itRelation, sol: 'Lösung: ' + right,
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8);
+      k.line(A, d1, 'kl c1'); k.line(B, d2, 'kl c2'); k.lab(A, d1, 'g', -3, 'c-c1'); k.lab(B, d2, 'h', 3, 'c-c2');
+      choose(r, 'Wie liegen die Geraden g und h zueinander? <b>Prüfe</b> mit den Kästchen.', ['g ∥ h', 'g ⊥ h', 'weder ∥ noch ⊥'].map(t => ({ t, ok: t === right })), R, { keep: true,
+        expl: `g geht ${desc(d1)}, h geht ${desc(d2)}. ` + (type === 'par' ? 'Gleiche Richtung: g und h sind parallel.' : type === 'perp' ? 'Zahlen getauscht und eine Richtung umgedreht: g und h sind orthogonal.' : 'Das ist weder die gleiche Richtung noch die orthogonale Richtung.'),
+        after() { if (type === 'perp') { const X = xLL(Ln(A, d1), Ln(B, d2)); if (X && X.x > .5 && X.x < 11.5 && X.y > .5 && X.y < 7.5) k.ra(X, d1, d2); } } });
+      R.mount(r);
+    } };
+}
+/* Viereck auf Karopapier erzeugen: Ecken A, B, C, D gegen den Uhrzeigersinn */
+function quadOf(type) {
+  for (let n = 0; n < 400; n++) {
+    let u, v, A = I(rint(1, 4), rint(5, 7)), pts;
+    if (type === 'quadrat') { u = pick([I(4, 0), I(3, 0), I(3, 1), I(2, 1), I(3, -1), I(4, 1)]); v = I(u.y, -u.x); }
+    else if (type === 'rechteck') { const b = pick([I(1, 0), I(1, 0), I(2, 1), I(1, 1), I(3, 1)]), ax = b.y === 0, m = ax ? rint(3, 7) : rint(1, 3), q = ax ? rint(2, 4) : rint(1, 2); if (m === q) continue; u = V.mul(b, m); v = V.mul(I(b.y, -b.x), q); }
+    else if (type === 'raute') { [u, v] = pick([[I(3, 1), I(-1, -3)], [I(5, 0), I(3, -4)], [I(5, 0), I(-3, -4)], [I(4, 3), I(0, -5)]]); }
+    else if (type === 'pgram') { u = I(rint(3, 6), 0); v = I(rint(1, 3) * pick([1, -1]), -rint(2, 4)); if (Math.abs(V.len(u) - V.len(v)) < .01) continue; }
+    else if (type === 'trapez') { const w = rint(5, 8), w2 = rint(2, w - 2), sh = rint(0, w - w2), h = rint(2, 4); pts = [A, I(A.x + w, A.y), I(A.x + sh + w2, A.y - h), I(A.x + sh, A.y - h)]; }
+    else if (type === 'drachen') { const cx = rint(4, 8), top = rint(1, 2), bot = rint(6, 7), w = rint(1, 3), y = rint(top + 1, top + 2); pts = [I(cx, bot), I(cx + w, y), I(cx, top), I(cx - w, y)]; if (y - top === bot - y) continue; }
+    else { pts = [A, I(A.x + rint(4, 7), A.y + rint(-1, 1)), I(A.x + rint(4, 8), A.y - rint(2, 4)), I(A.x + rint(-1, 2), A.y - rint(2, 4))]; }
+    if (!pts) pts = [A, V.add(A, u), V.add(V.add(A, u), v), V.add(A, v)];
+    if (!pts.every(p => inK(p, 12, 8, 1))) continue;
+    if (quadNames(pts).bad) continue;
+    const nm = quadNames(pts);
+    if (type === 'allg' && (nm.trapez || nm.drachen)) continue;
+    if (type === 'pgram' && (nm.raute || nm.rechteck)) continue;
+    if (type === 'trapez' && (nm.pgram || nm.drachen)) continue;
+    if (type === 'rechteck' && nm.quadrat) continue;
+    if (type === 'raute' && nm.quadrat) continue;
+    return pts;
+  }
+  return [I(2, 6), I(8, 6), I(8, 2), I(2, 2)];
+}
+function quadNames(p) {
+  const s = [0, 1, 2, 3].map(i => V.sub(p[(i + 1) % 4], p[i])), L2 = s.map(x => idot(x, x));
+  for (let i = 0; i < 4; i++) if (icross(s[i], s[(i + 1) % 4]) >= 0) return { bad: true };   // konvex, gegen den Uhrzeigersinn (am Bildschirm)
+  const p1 = icross(s[0], s[2]) === 0, p2 = icross(s[1], s[3]) === 0, eqAll = L2.every(x => x === L2[0]), right = s.every((x, i) => idot(x, s[(i + 1) % 4]) === 0);
+  const dist2 = (a, b) => idot(V.sub(a, b), V.sub(a, b));
+  const kite = (dist2(p[0], p[1]) === dist2(p[0], p[3]) && dist2(p[2], p[1]) === dist2(p[2], p[3])) || (dist2(p[1], p[0]) === dist2(p[1], p[2]) && dist2(p[3], p[0]) === dist2(p[3], p[2]));
+  const pgram = p1 && p2;
+  return { trapez: p1 || p2, pgram, raute: pgram && eqAll, rechteck: pgram && right, quadrat: eqAll && right, drachen: kite, p1, p2, eqAll, right };
+}
+const QN = [['quadrat', 'Quadrat'], ['rechteck', 'Rechteck'], ['raute', 'Raute'], ['pgram', 'Parallelogramm'], ['trapez', 'Trapez'], ['drachen', 'Drachen']];
+const SIDE = ['AB', 'BC', 'CD', 'DA'];
+function drawQuad(k, pts, cls = 'kp c1') { k.poly(pts, cls); const c = V.mul(pts.reduce((a, p) => V.add(a, p), I(0, 0)), .25); pts.forEach((p, i) => k.dot(p, NAMES[i], '', V.add(V.mul(V.unit(V.sub(p, c)), .5), I(-.12, .15)))); }
+function itSideRel() {
+  const pts = quadOf(pick(['trapez', 'pgram', 'rechteck', 'quadrat', 'drachen', 'raute'])), s = [0, 1, 2, 3].map(i => V.sub(pts[(i + 1) % 4], pts[i]));
+  const opp = Math.random() < .55, i = rint(0, 3), j = opp ? (i + 2) % 4 : (i + 1) % 4, rel = opp ? '∥' : '⊥';
+  const yes = opp ? icross(s[i], s[j]) === 0 : idot(s[i], s[j]) === 0;
+  const a = SIDE[i], b = opp && i >= 2 ? SIDE[j] : SIDE[j];
+  return { st: 'Station 4: Parallele Geraden', again: itSideRel, sol: `Lösung: ${a} ${rel} ${b} ist ${yes ? 'wahr' : 'falsch'}.`,
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8); drawQuad(k, pts);
+      WF(`Stimmt die Aussage? <span class="stmt">${a} ${rel} ${b}</span>`, yes, R, r,
+        `${a} geht ${desc(s[i])}, ${b} geht ${desc(s[j])}. ` + (yes ? (opp ? 'Gleiche Richtung: Die Seiten sind parallel.' : 'Die Seiten sind orthogonal.') : (opp ? 'Das ist nicht die gleiche Richtung: nicht parallel.' : 'Die Seiten sind nicht orthogonal.')),
+        () => { k.seg(pts[i], pts[(i + 1) % 4], 'kl hl1', 'res'); k.seg(pts[j], pts[(j + 1) % 4], 'kl hl2', 'res'); if (!opp && yes) k.ra(pts[j], s[j], V.mul(s[i], -1)); });
+      R.mount(r);
+    } };
+}
+
+/* =====================================================================
+   STATION 5 – VIERECKE ERKENNEN
+   ===================================================================== */
+function itNames(exam) {
+  const type = pick(['quadrat', 'rechteck', 'raute', 'pgram', 'trapez', 'drachen', 'allg', 'quadrat', 'raute', 'rechteck']), pts = quadOf(type), nm = quadNames(pts);
+  const right = QN.filter(([k2]) => nm[k2]).map(x => x[1]);
+  return { st: 'Station 5: Vierecke erkennen', again: () => itNames(exam), sol: 'Lösung: ' + (right.join(', ') || 'kein besonderes Viereck'),
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8); drawQuad(k, pts);
+      r.append(el('div', { class: 'q', html: T('Welche Namen passen? <b>Kreuze alle</b> passenden Namen an. <span class="en">(Often several names fit!)</span>') }));
+      const chips = el('div', { class: 'chips' }), sel = new Set();
+      const items = QN.map(x => x[1]).concat(['kein besonderes Viereck']);
+      items.forEach(n => { const c = el('button', { class: 'chip', html: n }); c.addEventListener('click', () => { if (lock) return; if (n === 'kein besonderes Viereck') { sel.clear(); chips.querySelectorAll('.chip').forEach(x => x.classList.remove('on')); } else { const z = chips.lastChild; sel.delete('kein besonderes Viereck'); z.classList.remove('on'); } sel.has(n) ? sel.delete(n) : sel.add(n); c.classList.toggle('on'); }); chips.append(c); });
+      let lock = false;
+      const go = el('button', { class: 'btn', html: 'Prüfen ✓' });
+      go.addEventListener('click', () => {
+        if (lock) return; if (!sel.size) { R.info('Kreuze mindestens einen Namen an.'); return; } lock = true; go.disabled = true;
+        const want = new Set(right.length ? right : ['kein besonderes Viereck']); let ok = true;
+        chips.querySelectorAll('.chip').forEach(c => { const n = c.textContent, a = sel.has(n), w = want.has(n); if (a && w) c.classList.add('right'); else if (a && !w) { c.classList.add('wrong'); ok = false; } else if (!a && w) { c.classList.add('miss'); ok = false; } });
+        // Eigenschaften zeigen
+        const s = [0, 1, 2, 3].map(i => V.sub(pts[(i + 1) % 4], pts[i]));
+        if (nm.p1) { k.seg(pts[0], pts[1], 'kl hl1', 'res'); k.seg(pts[2], pts[3], 'kl hl1', 'res'); } if (nm.p2) { k.seg(pts[1], pts[2], 'kl hl2', 'res'); k.seg(pts[3], pts[0], 'kl hl2', 'res'); }
+        s.forEach((x, i) => { if (idot(x, s[(i + 1) % 4]) === 0) k.ra(pts[(i + 1) % 4], s[(i + 1) % 4], V.mul(x, -1)); });
+        const why = [nm.p1 && nm.p2 ? 'AB ∥ DC und AD ∥ BC' : nm.p1 ? 'AB ∥ DC' : nm.p2 ? 'AD ∥ BC' : 'keine parallelen Seiten', nm.eqAll ? '4 gleich lange Seiten' : '', nm.right ? '4 rechte Winkel' : '', nm.drachen && !nm.eqAll ? 'eine Diagonale ist Symmetrieachse' : ''].filter(Boolean).join(' · ');
+        const ex = `Richtig ist: <b>${right.join(', ') || 'kein besonderes Viereck'}</b>.<br>Eigenschaften: ${why}.<br><span class="mut">Grün = richtig angekreuzt · Rot = falsch angekreuzt · Gelb = vergessen</span>`;
+        ok ? R.right(ex) : R.wrong(ex, true);
+      });
+      r.append(chips, go); R.mount(r);
+    } };
+}
+const WF_BANK = [
+  ['Jedes Quadrat ist ein Rechteck.', 1, 'Ein Quadrat hat vier rechte Winkel.'], ['Jedes Rechteck ist ein Quadrat.', 0, 'Ein Rechteck mit 4 cm und 2 cm hat nicht vier gleich lange Seiten.'],
+  ['Jede Raute ist ein Parallelogramm.', 1, 'Bei einer Raute sind gegenüberliegende Seiten parallel.'], ['Jedes Parallelogramm ist ein Trapez.', 1, 'Ein Parallelogramm hat sogar zwei Paare paralleler Seiten.'],
+  ['Ein Trapez hat immer vier rechte Winkel.', 0, 'Viele Trapeze haben gar keinen rechten Winkel.'], ['Jedes Quadrat ist eine Raute.', 1, 'Ein Quadrat ist ein Parallelogramm mit vier gleich langen Seiten.'],
+  ['Jede Raute ist ein Quadrat.', 0, 'Eine Raute muss keine rechten Winkel haben.'], ['Jedes Rechteck ist ein Parallelogramm.', 1, 'Im Rechteck sind gegenüberliegende Seiten parallel.'],
+  ['Jeder Drachen ist eine Raute.', 0, 'Beim Drachen sind meist nicht alle Seiten gleich lang.'], ['Jede Raute ist ein Drachen.', 1, 'Bei der Raute ist jede Diagonale eine Symmetrieachse.'],
+  ['Jedes Trapez ist ein Parallelogramm.', 0, 'Ein Trapez braucht nur ein Paar paralleler Seiten.'], ['In einem Rechteck sind gegenüberliegende Seiten gleich lang.', 1, 'Gegenüberliegende Seiten im Rechteck sind gleich lang und parallel.'],
+  ['Ein Parallelogramm hat immer eine Symmetrieachse.', 0, 'Ein „schiefes" Parallelogramm hat keine Symmetrieachse.'], ['Ein Rechteck hat 4 Symmetrieachsen.', 0, 'Ein Rechteck (kein Quadrat) hat nur 2 Symmetrieachsen.'],
+  ['Ein Quadrat ist punktsymmetrisch.', 1, 'Nach einer halben Drehung sieht das Quadrat wieder gleich aus.'], ['Jeder Drachen ist punktsymmetrisch.', 0, 'Ein Drachen sieht nach einer halben Drehung meist anders aus.'],
+  ['Ein Quadrat ist auch ein Trapez.', 1, 'Das Quadrat hat parallele Seiten – also ist es auch ein Trapez.'], ['Ein Rechteck hat vier gleich lange Seiten.', 0, 'Nur gegenüberliegende Seiten sind gleich lang.']
+];
+function itWF() {
+  const [q, a, ex] = pick(WF_BANK);
+  return { st: 'Station 5: Vierecke erkennen', again: itWF, sol: `Lösung: ${a ? 'wahr' : 'falsch'} – ${ex}`,
+    show(box, R) { const c = el('div', { class: 'narrow' }); box.append(c); WF(`Wahr oder falsch?<br><span class="stmt">„${q}"</span>`, !!a, R, c, ex); R.mount(c); } };
+}
+const RIDDLES = [
+  ['Ich habe vier gleich lange Seiten, aber keinen rechten Winkel.', 'Raute'], ['Ich habe vier rechte Winkel, aber nicht alle Seiten sind gleich lang.', 'Rechteck'],
+  ['Ich habe genau zwei parallele Seiten.', 'Trapez'], ['Eine Diagonale ist meine Symmetrieachse. Ich habe keine parallelen Seiten.', 'Drachen'],
+  ['Ich bin ein Rechteck und eine Raute zugleich.', 'Quadrat'], ['Meine gegenüberliegenden Seiten sind parallel. Ich habe keinen rechten Winkel und nicht vier gleich lange Seiten.', 'Parallelogramm'],
+  ['Ich habe vier gleich lange Seiten und vier rechte Winkel.', 'Quadrat'], ['Ich bin punktsymmetrisch und habe keine Symmetrieachse.', 'Parallelogramm']
+];
+function itRiddle() {
+  const [q, a] = pick(RIDDLES);
+  return { st: 'Station 5: Vierecke erkennen', again: itRiddle, sol: 'Lösung: ' + a,
+    show(box, R) { const c = el('div', { class: 'narrow' }); box.append(c); choose(c, `<b>Wer bin ich?</b><br>„${q}"`, QN.map(x => ({ t: x[1], ok: x[1] === a })), R, { keep: true, row: true, expl: `Lösung: <b>${a}</b>.` }); R.mount(c); } };
+}
+
+/* =====================================================================
+   STATION 6 – VIERECKE ZEICHNEN
+   ===================================================================== */
+function itPgramD(exam) {
+  const type = pick(['pgram', 'rechteck', 'quadrat', 'raute']), pts = quadOf(type), nm = quadNames(pts);
+  const right = nm.quadrat ? 'Quadrat' : nm.rechteck ? 'Rechteck' : nm.raute ? 'Raute' : 'Parallelogramm', D = pts[3];
+  return { st: 'Station 6: Vierecke zeichnen', again: () => itPgramD(exam), sol: 'Lösung: D liegt so, dass DC parallel zu AB ist und AD parallel zu BC.',
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8);
+      k.pline(pts.slice(0, 3), 'kl c1 thick'); pts.slice(0, 3).forEach((p, i) => k.dot(p, NAMES[i]));
+      r.append(el('div', { class: 'q', html: T('<b>Ergänze</b> zu einem Parallelogramm ABCD. Wo liegt der Punkt D?') }));
+      const st = el('div', { class: 'box', html: T('👆 Tippe auf den Punkt D. <span class="mut">Tipp: Von C aus gehst du wie von B nach A.</span>') }); r.append(st);
+      const ab = V.sub(pts[0], pts[1]);
+      tapPoint(k, R, { sol: D, ok: Q => eq(Q, D), hint: () => `Von B nach A geht man ${desc(ab)} – genau so geht man von C nach D. (Achte auf die Richtung: ${ab.x < 0 ? 'nach links' : 'nach rechts'}.)`,
+        onFail() { k.poly(pts, 'kp c2'); k.dot(D, 'D', 'ok'); },
+        onOk() {
+          k.poly(pts, 'kp c2'); k.dot(D, 'D', 'c2');
+          if (exam) { R.right('D ist richtig.'); return; }
+          st.remove();
+          choose(r, 'Welches <b>besondere</b> Parallelogramm ist entstanden?', ['Parallelogramm', 'Rechteck', 'Quadrat', 'Raute'].map(t => ({ t, ok: t === right })), R, { keep: true, row: true,
+            expl: right === 'Parallelogramm' ? 'Es hat keine rechten Winkel und nicht vier gleich lange Seiten: ein „normales" Parallelogramm.' : right === 'Rechteck' ? 'Es hat vier rechte Winkel.' : right === 'Quadrat' ? 'Vier rechte Winkel und vier gleich lange Seiten.' : 'Vier gleich lange Seiten, aber keine rechten Winkel.',
+            after() { const s = [0, 1, 2, 3].map(i => V.sub(pts[(i + 1) % 4], pts[i])); s.forEach((x, i) => { if (idot(x, s[(i + 1) % 4]) === 0) k.ra(pts[(i + 1) % 4], s[(i + 1) % 4], V.mul(x, -1)); }); } });
+          R.mount(r);
+        } });
+      R.mount(r);
+    } };
+}
+const UNITS = [
+  ['35 mm = ?', '3,5 cm', ['35 cm', '0,35 cm'], '10 mm = 1 cm. Also sind 35 mm = 3,5 cm.'], ['4 cm = ? Kästchen', '8 Kästchen', ['4 Kästchen', '40 Kästchen'], '1 cm = 2 Kästchen. Also 4 cm = 8 Kästchen.'],
+  ['45 mm = ? Kästchen', '9 Kästchen', ['45 Kästchen', '4,5 Kästchen'], '45 mm = 4,5 cm = 9 Kästchen.'], ['2,5 cm = ? mm', '25 mm', ['250 mm', '2,5 mm'], '1 cm = 10 mm. Also 2,5 cm = 25 mm.'],
+  ['6 Kästchen = ? cm', '3 cm', ['6 cm', '12 cm'], '2 Kästchen = 1 cm. Also 6 Kästchen = 3 cm.'], ['1 cm = ? mm', '10 mm', ['100 mm', '1 mm'], '1 cm = 10 mm.'],
+  ['7 Kästchen = ? mm', '35 mm', ['70 mm', '7 mm'], '7 Kästchen = 3,5 cm = 35 mm.']
+];
+function itCorner() {
+  const pts = quadOf(pick(['trapez', 'pgram', 'rechteck', 'drachen'])), kind = pick(['tap', 'tap', 'side', 'unit']);
+  if (kind === 'unit') { const [q, a, w, ex] = pick(UNITS); return { st: 'Station 6: Vierecke zeichnen', again: itCorner, sol: 'Lösung: ' + a, show(box, R) { const c = el('div', { class: 'narrow' }); box.append(c); choose(c, `<b>Rechne um:</b> ${q}`, [{ t: a, ok: true }, ...w.map(t => ({ t }))], R, { row: true, expl: ex }); R.mount(c); } }; }
+  if (kind === 'side') {
+    const j = rint(0, 3), nm = 'abcd'[j];
+    return { st: 'Station 6: Vierecke zeichnen', again: itCorner, sol: `Lösung: Die Seite ${nm} ist ${SIDE[j]}.`,
+      show(box, R) { const [l, r] = twoCol(box), k = Karo(l, 12, 8); drawQuad(k, pts);
+        choose(r, `Welche Strecke ist die Seite <b>${nm}</b>?`, SIDE.map((t, i) => ({ t: 'Strecke ' + t, ok: i === j })), R, { keep: true, row: true, expl: 'Die Seite a ist AB, b ist BC, c ist CD und d ist DA.', after() { k.seg(pts[j], pts[(j + 1) % 4], 'kl hl1', 'res'); k.lab(V.mid(pts[j], pts[(j + 1) % 4]), I(0, 1), nm, 0, 'c-c1'); } }); R.mount(r); } };
+  }
+  const j = rint(1, 3);
+  return { st: 'Station 6: Vierecke zeichnen', again: itCorner, sol: 'Lösung: Die Ecken heißen gegen den Uhrzeigersinn A, B, C, D.',
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8); k.poly(pts, 'kp c1'); pts.forEach((p, i) => k.dot(p, i === 0 ? 'A' : ''));
+      r.append(el('div', { class: 'q', html: T(`Die Ecken heißen <b>gegen den Uhrzeigersinn</b> A, B, C, D. Tippe auf die Ecke <b>${NAMES[j]}</b>.`) }), el('div', { class: 'box', html: '↺ gegen den Uhrzeigersinn <span class="en">(anticlockwise)</span>' }));
+      tapPoint(k, R, { sol: pts[j], ok: Q => eq(Q, pts[j]), hint: () => 'Gehe von A aus <b>gegen</b> den Uhrzeigersinn: A → B → C → D.', onFail() { pts.forEach((p, i) => k.text(V.add(p, I(.25, -.3)), NAMES[i], 'c-ok')); },
+        onOk() { pts.forEach((p, i) => i && k.text(V.add(p, I(.25, -.3)), NAMES[i], 'c-c2')); R.right('A → B → C → D gegen den Uhrzeigersinn.'); } });
+      R.mount(r);
+    } };
+}
+
+/* =====================================================================
+   STATION 7 – PUNKTSYMMETRIE
+   ===================================================================== */
+const ZP = I(6, 4), pf = P => I(2 * ZP.x - P.x, 2 * ZP.y - P.y);
+function itPointCheck() {
+  let P; do { P = I(rint(1, 11), rint(1, 7)); } while (V.dist(P, ZP) < 2 || !inK(pf(P)));
+  const C = pf(P), yes = Math.random() < .5; let Q = C;
+  if (!yes) { const c = pick([I(1, 0), I(-1, 0), I(0, 1), I(0, -1)]); Q = V.add(C, c); if (!inK(Q, 12, 8, 0)) Q = V.sub(C, c); }
+  const v = V.sub(ZP, P);
+  return { st: 'Station 7: Punktsymmetrie', again: itPointCheck, sol: yes ? 'Lösung: richtig gespiegelt.' : 'Lösung: falsch gespiegelt.',
+    show(box, R) {
+      const [l, r] = twoCol(box), k = Karo(l, 12, 8); k.dot(ZP, 'Z', 'z'); k.dot(P, 'P', 'acc'); k.dot(Q, "P'", 'c2');
+      WF("Ist P' das Spiegelbild von P am Punkt Z?", yes, R, r, `Kästchen-Trick: Von P nach Z geht man ${desc(v).replace(/^/, '')}. Von Z nach P' geht man <b>noch einmal</b> genauso.` + (yes ? '' : ' Der richtige Bildpunkt ist grün.'),
+        () => { k.seg(P, C, 'kl help', 'aux'); if (!yes) k.dot(C, '', 'ok'); });
+      R.mount(r);
+    } };
+}
+function vecDesc(v) { const p = []; if (v.x > 0) p.push(`${v.x} nach rechts`); if (v.x < 0) p.push(`${-v.x} nach links`); if (v.y < 0) p.push(`${-v.y} nach oben`); if (v.y > 0) p.push(`${v.y} nach unten`); return p.join(', ') || '0'; }
+function itPointFig(exam) {
+  let pts; for (let n = 0; n < 2000; n++) { const c = pick([1, -1]); pts = Array.from({ length: exam ? 1 : 3 }, () => I(rint(1, 11), rint(1, 7))); if (pts.every(p => Math.sign(p.x - 6) === c && Math.abs(p.x - 6) >= 1 && inK(pf(p))) && (exam || (apartI(pts) && polyArea(pts) >= 3))) break; }
+  return mirrorTapItem({ st: 'Station 7: Punktsymmetrie', again: () => itPointFig(exam), pts, f: pf,
+    q: exam ? '<b>Spiegle</b> den Punkt A am Punkt Z.' : '<b>Spiegle</b> die Figur am Punkt Z. Benutze den Kästchen-Trick.',
+    draw(k) { k.dot(ZP, 'Z', 'z'); },
+    tip: (P, n) => `Zähle von ${n} bis Z. Dann gehst du von Z aus noch einmal genauso weit.`,
+    hint(P, Q, C, n) { return `Von ${n} nach Z: ${vecDesc(V.sub(ZP, P))}. Von Z nach ${n}' noch einmal: ${vecDesc(V.sub(ZP, P))}.`; },
+    help(k, P, Q) { k.seg(P, Q, 'kl help', 'aux'); },
+    done: 'Die Bildfigur steht „auf dem Kopf" – das ist eine halbe Drehung um Z.',
+    sol: 'Lösung: Z ist die Mitte zwischen Punkt und Bildpunkt.' });
+}
+const PS_ITEMS = Object.keys(LET).map(ch => ({ ch, ps: !!LETPS[ch] })).concat(SHAPES.filter(s => !s.circle).map(s => ({ shape: s, ps: s.ps })));
+function itIsPS() {
+  const o = pick(PS_ITEMS), name = o.ch ? `der Buchstabe <b>${o.ch}</b>` : `die Figur (${o.shape.n})`;
+  return { st: 'Station 7: Punktsymmetrie', again: itIsPS, sol: `Lösung: ${o.ps ? 'ja' : 'nein'}.`,
+    show(box, R) {
+      const [l, r] = twoCol(box); let g, c;
+      if (o.ch) { const lb = letterBoard(l, o.ch); g = lb.g; c = '150px 150px'; }
+      else { const k = Karo(l, 12, 8, {}); drawShape(k, o.shape); g = k.L.obj; const cen = V.mul(o.shape.pts.reduce((a, p) => V.add(a, p), I(0, 0)), 1 / o.shape.pts.length); c = `${cen.x * KS}px ${cen.y * KS}px`; }
+      choose(r, `Ist ${name} <b>punktsymmetrisch</b>?`, [{ t: 'Ja, punktsymmetrisch', ok: o.ps }, { t: 'Nein', ok: !o.ps }], R, { keep: true, row: true,
+        expl: o.ps ? 'Nach einer halben Drehung (180°) sieht die Figur wieder genau gleich aus. Schau zu! 🔄' : 'Nach einer halben Drehung (180°) sieht die Figur anders aus. Schau zu! 🔄',
+        after() { const ghost = g.cloneNode(true); ghost.classList.add('ghostrot'); ghost.style.transformOrigin = c; g.parentNode.append(ghost); requestAnimationFrame(() => requestAnimationFrame(() => ghost.classList.add('go'))); } });
+      R.mount(r);
+    } };
+}
+
+/* =====================================================================
+   KNOBELN (aus den Wahlstationen)
+   ===================================================================== */
+const HAX = new Set('BCDEHIKOX'), VAX = new Set('AHIMOTUVWXY');
+const WORDS = ['BOX', 'KOCH', 'DECKE', 'OTTO', 'MAMA', 'UHU', 'ANNA', 'AXA', 'HOCH', 'TOT', 'WOW', 'BIO', 'ICH', 'OMO', 'HEXE', 'BEIDE', 'MOTTO', 'OHO', 'TAT', 'EIS'];
+function itWord() {
+  const w = pick(WORDS), axis = pick(['w', 's']);
+  const same = axis === 'w' ? [...w].every(c => HAX.has(c)) : ([...w].every(c => VAX.has(c)) && w === [...w].reverse().join(''));
+  return { st: 'Knobeln', again: itWord, sol: same ? 'Lösung: ja' : 'Lösung: nein',
+    show(box, R) {
+      const c = el('div', { class: 'narrow' }); box.append(c);
+      const wd = el('div', { class: 'word', html: `<span>${w}</span>` }), mir = el('div', { class: 'word mir ' + (axis === 'w' ? 'mw' : 'ms'), html: `<span>${w}</span>` }); mir.hidden = true;
+      c.append(el('div', { class: 'box', html: T(`Das Wort wird an einer <b>${axis === 'w' ? 'waagrechten' : 'senkrechten'}</b> Spiegelachse gespiegelt.`) }), wd, mir);
+      choose(c, 'Sieht das Wort nach dem Spiegeln <b>genauso</b> aus?', [{ t: 'Ja, genauso', ok: same }, { t: 'Nein, anders', ok: !same }], R, { keep: true, row: true,
+        expl: axis === 'w' ? (same ? 'Alle Buchstaben haben eine waagrechte Symmetrieachse.' : 'Nicht alle Buchstaben haben eine waagrechte Symmetrieachse.') : (same ? 'Das Wort ist von vorn und hinten gleich, und alle Buchstaben haben eine senkrechte Achse.' : 'Bei einer senkrechten Achse muss das Wort von vorn und hinten gleich sein – und alle Buchstaben brauchen eine senkrechte Achse.'),
+        after() { mir.hidden = false; } });
+      R.mount(c);
+    } };
+}
+const KNOBEL = [
+  ['Wie viele Quadrate siehst du in einem 3 × 3-Gitter? (Tipp: drei Größen)', '14', ['9', '10', '13'], '9 kleine + 4 mittlere (2 × 2) + 1 großes = 14.', 3],
+  ['Wie viele Quadrate siehst du in einem 2 × 2-Gitter?', '5', ['4', '6', '8'], '4 kleine + 1 großes = 5.', 2],
+  ['Wie viele Symmetrieachsen hat eine Strecke?', '2', ['1', '0', 'unendlich viele'], 'Die Strecke selbst (bzw. ihre Gerade) und die Orthogonale durch die Mitte.'],
+  ['Wie viele Symmetriezentren hat ein Kreis?', '1', ['0', '2', 'unendlich viele'], 'Der Mittelpunkt.'],
+  ['Wie viele Symmetrieachsen hat ein Kreis?', 'unendlich viele', ['1', '2', '4'], 'Jede Gerade durch den Mittelpunkt ist eine Symmetrieachse.'],
+  ['Wie viele Symmetrieachsen hat ein gleichseitiges Dreieck?', '3', ['1', '0', '6'], 'Durch jede Ecke und die Mitte der gegenüberliegenden Seite.'],
+  ['Wie viele Symmetriezentren hat ein gleichseitiges Dreieck?', '0', ['1', '3', '2'], 'Nach einer halben Drehung steht das Dreieck auf dem Kopf.'],
+  ['Du spiegelst erst an einer senkrechten, dann an einer waagrechten Achse. Das ist das Gleiche wie …', 'eine halbe Drehung (Punktspiegelung)', ['eine Vierteldrehung', 'gar nichts'], 'Zweimal an orthogonalen Achsen spiegeln = am Schnittpunkt spiegeln.'],
+  ['Warum steht FEUERWEHR vorn auf dem Auto in Spiegelschrift?', 'Im Rückspiegel liest man es dann richtig.', ['Weil es schöner aussieht.', 'Damit man es von der Seite lesen kann.'], 'Der Rückspiegel spiegelt das Wort noch einmal – dann ist es wieder richtig lesbar.'],
+  ['Du verbindest die Seitenmitten eines Quadrats. Welches Viereck entsteht?', 'ein Quadrat', ['ein Trapez', 'ein Drachen (kein Quadrat)'], 'Die Seitenmitten eines Quadrats bilden wieder ein (gedrehtes) Quadrat.'],
+  ['Du verbindest die Seitenmitten eines Rechtecks. Welches Viereck entsteht?', 'eine Raute', ['ein Rechteck', 'ein Quadrat'], 'Die vier neuen Seiten sind gleich lang: eine Raute.']
+];
+function itKnobel() {
+  const [q, a, w, ex, grid] = pick(KNOBEL);
+  return { st: 'Knobeln', again: itKnobel, sol: 'Lösung: ' + a,
+    show(box, R) {
+      const c = el('div', { class: 'narrow' }); box.append(c);
+      if (grid) { const h = el('div', { style: 'max-width:240px;margin:0 auto' }), k = Karo(h, grid + 2, grid + 2, { plain: true }); for (let i = 0; i <= grid; i++) { k.seg(I(1, 1 + i), I(1 + grid, 1 + i), 'kl c1'); k.seg(I(1 + i, 1), I(1 + i, 1 + grid), 'kl c1'); } c.append(h); }
+      choose(c, q, [{ t: a, ok: true }, ...w.map(t => ({ t }))], R, { row: true, expl: ex }); R.mount(c);
+    } };
+}
+
+/* =====================================================================
+   FOTO-AUFGABEN: im Heft zeichnen, dann Foto senden
+   ===================================================================== */
+function fotoTask(host, t) {
+  const c = t.cfg, box = el('div', { class: 'two' }), left = el('div', { class: 'panel' }), right = el('div', { class: 'panel' });
+  box.append(left, right); host.append(box);
+  left.append(el('div', { class: 'card heftcard' }, el('h3', '📄 Im Heft zeichnen'), el('div', { class: 'merk', html: '<b class="t">Aufgabe</b>' + T(c.aufgabe) }), el('div', { class: 'box', html: '<b>So gehst du vor:</b><ol class="instr">' + c.steps.map(s => `<li>${T(s)}</li>`).join('') + '</ol>' })));
+  let k = null;
+  if (c.fig) { const fh = el('div', { class: 'card' }, el('b', c.figTitle || 'Übertrage diese Figur in dein Heft (Kästchen zählen):')); k = Karo(fh, 12, 8); c.fig(k); left.append(fh); }
+  const pre = el('div', { class: 'panel' }); right.append(pre);
+  const showFoto = () => { const f = el('div'); right.append(f); fotoBlock(f, t, () => { if (c.sol && k) { right.append(el('button', { class: 'btn sec', html: '👀 Lösung ansehen – vergleiche mit deinem Heft', onclick(e) { c.sol(k); e.target.remove(); (k.svg).scrollIntoView({ behavior: 'smooth' }); } })); } }); };
+  if (c.check) { c.check(pre, () => showFoto()); } else showFoto();
+}
+function fotoBlock(host, t, after) {
+  const sid = t.id, have = ST.fotos[sid], pend = pendGet()[sid];
+  const status = el('div', { class: 'fb ' + (have || pend ? 'info' : ''), html: pend ? '⏳ Dein Foto wartet auf Internet. Es wird automatisch gesendet.' : have ? `✅ Du hast schon ein Foto gesendet (${new Date(have.t).toLocaleString('de-DE', { dateStyle: 'short', timeStyle: 'short' })}). Ein neues Foto ersetzt das alte.` : '' });
+  const inp = el('input', { type: 'file', accept: 'image/*', capture: 'environment', style: 'display:none' });
+  const shot = el('div', { class: 'shot' }), fb2 = el('div', { class: 'fb' });
+  const take = el('button', { class: 'btn', html: '📷 Foto aufnehmen' }), send = el('button', { class: 'btn', html: '⬆️ Foto senden', hidden: '' });
+  let data = null;
+  take.addEventListener('click', () => inp.click());
+  inp.addEventListener('change', async () => {
+    const f = inp.files && inp.files[0]; inp.value = ''; if (!f) return;
+    fb2.className = 'fb info'; fb2.innerHTML = 'Das Foto wird vorbereitet …';
+    try { data = await compress(f); } catch (e) { fb2.className = 'fb err'; fb2.innerHTML = 'Das Bild konnte nicht gelesen werden. Versuche es noch einmal.'; return; }
+    shot.innerHTML = ''; shot.append(el('img', { src: data, alt: 'Foto von deinem Heft' }));
+    fb2.className = 'fb info'; fb2.innerHTML = 'Ist alles gut zu sehen und scharf? Dann tippe auf <b>Foto senden</b>.';
+    take.innerHTML = '📷 Neues Foto'; take.className = 'btn sec'; send.hidden = false;
+  });
+  send.addEventListener('click', async () => {
+    if (!data) return; send.disabled = take.disabled = true; fb2.className = 'fb info'; fb2.innerHTML = '⏳ Das Foto wird gesendet …';
+    const r = await sendFoto(sid, data); send.disabled = take.disabled = false;
+    if (r === 'ok' || r === 'local') { send.hidden = true; data = null; status.className = 'fb'; status.innerHTML = ''; award(sid); fb2.className = 'fb ok'; fb2.innerHTML = r === 'ok' ? '✅ Das Foto ist angekommen. Deine Lehrkraft kann es sehen. ⭐' : '✅ Gespeichert (nur auf diesem Gerät).'; after && after(); host.append(el('div', { class: 'card donebox' }, taskNav(t))); }
+    else if (r === 'later') { send.hidden = true; data = null; fb2.className = 'fb info'; fb2.innerHTML = '📶 Kein Internet. Das Foto wird <b>automatisch gesendet</b>, sobald Internet da ist. Dann bekommst du den Stern.'; after && after(); }
+    else { fb2.className = 'fb err'; fb2.innerHTML = r; }
+  });
+  host.append(el('div', { class: 'card', style: 'display:grid;gap:.7rem' }, el('h3', '📷 Foto von deinem Heft'),
+    el('div', { class: 'box', html: T('<ul style="margin:0;padding-left:1.2rem"><li>Lege das Heft <b>flach</b> auf den Tisch.</li><li>Halte das iPad <b>gerade</b> darüber.</li><li>Gutes Licht, <b>kein Schatten</b>.</li><li>Die <b>ganze</b> Zeichnung ist auf dem Foto.</li></ul>') }),
+    status, el('div', { class: 'row' }, take, send), inp, shot, fb2));
+}
+function numCheck(host, q, val, tol, unit, ex, next) {
+  const inp = el('input', { class: 'inp', inputmode: 'decimal', placeholder: '?', style: 'max-width:140px' }), fb = el('div', { class: 'fb' });
+  let done = false;
+  const go = el('button', { class: 'btn', html: 'Prüfen ✓', onclick() {
+    if (done) return; const v = parseFloat(inp.value.replace(',', '.'));
+    if (isNaN(v)) { fb.className = 'fb info'; fb.innerHTML = 'Schreibe eine Zahl.'; return; }
+    if (Math.abs(v - val) <= tol) { done = true; fb.className = 'fb ok'; fb.innerHTML = T('✅ Richtig! ' + ex + ' Jetzt mach ein Foto von deinem Heft.'); next(); }
+    else { miss(); fb.className = 'fb err'; fb.innerHTML = T(`❌ Das passt nicht. Prüfe deine Zeichnung: Sind die Längen genau? Sind die Winkel wirklich rechte Winkel?`); }
+  } });
+  host.append(el('div', { class: 'card', style: 'display:grid;gap:.6rem' }, el('h3', '🔍 Kontrolle'), el('div', { html: T(q) }), el('div', { class: 'row' }, inp, el('b', unit), go), fb));
+}
+const F_SPIEGEL = {
+  aufgabe: '<b>Spiegle</b> das Dreieck ABC an der Geraden h. Benutze das <b>Geodreieck</b> – die Kästchen helfen hier nicht! <b>Beschrifte</b> A\', B\' und C\'.',
+  steps: ['Übertrage die Gerade h und das Dreieck ABC in dein Heft. Zähle die Kästchen genau.', 'Lege das Geodreieck mit der Mittellinie auf h. Zeichne die Orthogonale zu h durch A.', 'Miss den Abstand von A bis h. Trage A\' auf der anderen Seite im gleichen Abstand ein.', 'Mache das Gleiche mit B und C.', 'Verbinde A\', B\' und C\'. Markiere die rechten Winkel.'],
+  fig(k) { const h = LnPP(I(1, 7), I(11, 2)); k.line(h.p, h.d, 'kl axis'); k.text(I(10.6, 1.6), 'h', 'c-axis'); this.T.forEach((p, i) => k.dot(p, NAMES[i])); k.poly(this.T, 'kp c1'); },
+  T: [I(2, 2), I(5, 1), I(4, 4)],
+  sol(k) { const h = LnPP(I(1, 7), I(11, 2)), m = p => { const F = proj(p, h); return V.sub(V.mul(F, 2), p); }; const im = this.T.map(m); k.poly(im, 'kp c2'); im.forEach((p, i) => { k.dot(p, NAMES[i] + "'", 'c2'); k.seg(this.T[i], p, 'kl help', 'aux'); k.ra(proj(this.T[i], h), h.d, V.sub(this.T[i], proj(this.T[i], h))); }); }
+};
+const F_VIERECK = {
+  aufgabe: '<b>Zeichne</b> in dein Heft: a) ein Rechteck ABCD mit a = 4 cm und b = 3 cm. b) ein Parallelogramm ABCD mit a = 5 cm und b = 3 cm (kein Rechteck).',
+  steps: ['Zeichne die Strecke AB (a = 4 cm = 8 Kästchen).', 'Zeichne in B die Orthogonale zu AB. Trage b = 3 cm ab: das ist C.', 'Zeichne in A die Orthogonale. Trage 3 cm ab: das ist D. Verbinde C und D.', 'Markiere die rechten Winkel. Beschrifte die Ecken gegen den Uhrzeigersinn.', 'Parallelogramm: AB = 5 cm. Von B aus schräg nach oben BC = 3 cm. Durch C die Parallele zu AB, durch A die Parallele zu BC. Der Schnittpunkt ist D.'],
+  check(host, next) { numCheck(host, '<b>Miss</b> im Rechteck die Diagonale AC. Wie lang ist sie?', 5, .15, 'cm', 'Die Diagonale ist 5 cm lang – dein Rechteck ist genau.', next); }
+};
+const F_PUNKT = {
+  aufgabe: '<b>Spiegle</b> das Viereck ABCD am Punkt Z. Benutze den Kästchen-Trick. <b>Beschrifte</b> die Bildpunkte A\', B\', C\' und D\'.',
+  steps: ['Übertrage das Viereck ABCD und den Punkt Z in dein Heft.', 'Zähle von A bis Z: wie viele Kästchen nach rechts/links und nach oben/unten?', 'Gehe von Z aus noch einmal genauso weit. Dort ist A\'.', 'Mache das Gleiche mit B, C und D.', 'Verbinde A\', B\', C\' und D\'. Die Bildfigur steht „auf dem Kopf".'],
+  Q: [I(1, 7), I(4, 6), I(5, 4), I(2, 3)],
+  fig(k) { drawQuad(k, this.Q); k.dot(I(6, 4), 'Z', 'z', I(-.1, -.35)); },
+  figTitle: 'Übertrage das Viereck und den Punkt Z in dein Heft:',
+  sol(k) { const im = this.Q.map(p => I(12 - p.x, 8 - p.y)), c = I(9, 3.5); k.poly(im, 'kp c2'); im.forEach((p, i) => { k.dot(p, NAMES[i] + "'", 'c2', V.add(V.mul(V.unit(V.sub(p, c)), .55), I(-.12, .15))); k.seg(this.Q[i], p, 'kl help', 'aux'); }); }
+};
+
+/* =====================================================================
+   STATIONEN
+   ===================================================================== */
+const mixOf = gens => i => pick(gens)();
+const R6 = (id, title, sub, gens, n = 6) => ({ id, stars: 3, title, sub, run: (h) => runRound(h, findTask(id), { n, make: Array.isArray(gens) ? (i => gens[i % gens.length]()) : gens }) });
+const findTask = id => STATIONS.flatMap(s => s.tasks).find(t => t.id === id);
+const FT = (id, title, sub, cfg) => ({ id, stars: 1, foto: true, title, sub, cfg, run: h => fotoTask(h, findTask(id)) });
+const ST1 = { id: '1', title: 'Orthogonale Geraden', icon: '⊥', sub: 'g ⊥ h – der rechte Winkel',
+  intro: '<b>Merke:</b> Zwei Geraden sind <b>orthogonal</b> (g ⊥ h), wenn sie einen rechten Winkel (90°) bilden. Den rechten Winkel markiert man mit einem <b>Viertelkreis mit Punkt</b>.<br><b>Kästchen-Trick:</b> g geht 2 nach rechts und 1 nach oben → die Orthogonale geht 1 nach links und 2 nach oben (Zahlen tauschen, eine Richtung umdrehen).',
+  tasks: [R6('1a', 'Orthogonal oder nicht?', 'Prüfe mit dem Kästchen-Trick.', [itOrthoCheck, itOrthoCheck, () => itRule(RULES_ORTHO, 'Station 1: Orthogonale Geraden')], 7),
+    R6('1b', 'Orthogonale durch P zeichnen', 'Tippe einen zweiten Punkt an.', [() => itTapLine(false)], 5)] };
+const ST2 = { id: '2', title: 'Achsenspiegelung', icon: '🪞', sub: 'Punkte und Figuren an g spiegeln',
+  intro: '<b>Merke:</b> So spiegelst du P an g: 1. Orthogonale zu g durch P. 2. P\' liegt auf der anderen Seite und hat <b>denselben Abstand</b> zu g.<br>Bei einer schrägen Achse zählst du die <b>Kästchen-Diagonalen</b>.',
+  tasks: [R6('2a', 'Richtig gespiegelt?', 'Prüfe P und P\'.', [itMirrorCheck], 7), R6('2b', 'Figuren spiegeln', 'Tippe die Bildpunkte an.', [() => itMirrorFig(false)], 4),
+    FT('2F', 'Spiegeln mit dem Geodreieck 📷', 'Im Heft zeichnen – Foto senden', F_SPIEGEL)] };
+const ST3 = { id: '3', title: 'Symmetrieachsen', icon: '🦋', sub: 'Achsensymmetrische Figuren',
+  intro: '<b>Merke:</b> Eine Figur ist <b>achsensymmetrisch</b>, wenn man sie so falten kann, dass beide Hälften genau aufeinander passen. Die Faltlinie heißt <b>Symmetrieachse</b>.',
+  tasks: [R6('3a', 'Wie viele Symmetrieachsen?', 'Figuren untersuchen', [itAxes], 7), R6('3b', 'Buchstaben', 'Senkrecht, waagrecht – oder keine?', [itLetter], 8), R6('3c', 'Figuren ergänzen', 'Mach die Figur achsensymmetrisch.', [itComplete], 3)] };
+const ST4 = { id: '4', title: 'Parallele Geraden', icon: '∥', sub: 'g ∥ h – überall gleicher Abstand',
+  intro: '<b>Merke:</b> Zwei Geraden sind <b>parallel</b> (g ∥ h), wenn sie überall den gleichen Abstand haben. Sie schneiden sich nie. Parallele Geraden gehen auf dem Karopapier in die <b>gleiche Richtung</b>.',
+  tasks: [R6('4a', '∥ oder ⊥ ?', 'Wie liegen g und h zueinander?', [itRelation], 7), R6('4b', 'Parallele durch P zeichnen', 'Tippe einen zweiten Punkt an.', [() => itTapLine(true)], 5), R6('4c', 'Seiten im Viereck', 'AB ∥ DC? AB ⊥ BC?', [itSideRel], 7)] };
+const ST5 = { id: '5', title: 'Vierecke erkennen', icon: '🔷', sub: 'Quadrat, Rechteck, Raute, …',
+  intro: '<b>Merke:</b> <b>Trapez:</b> mindestens zwei Seiten parallel. <b>Parallelogramm:</b> gegenüberliegende Seiten parallel. <b>Raute:</b> Parallelogramm mit vier gleich langen Seiten. <b>Rechteck:</b> Parallelogramm mit vier rechten Winkeln. <b>Quadrat:</b> vier gleich lange Seiten und vier rechte Winkel. <b>Drachen:</b> eine Diagonale ist Symmetrieachse.<br>Ein Viereck kann <b>mehrere Namen</b> haben!',
+  tasks: [R6('5a', 'Alle Namen finden', 'Oft passen mehrere Namen!', [() => itNames(false)], 6), R6('5b', 'Wahr oder falsch?', '„Jedes Quadrat ist ein Rechteck."', [itWF], 8), R6('5c', 'Wer bin ich?', 'Viereck-Rätsel', [itRiddle], 6)] };
+const ST6 = { id: '6', title: 'Vierecke zeichnen', icon: '✏️', sub: 'Parallelogramme ergänzen, Ecken benennen',
+  intro: '<b>Merke:</b> Die Ecken heißen <b>A, B, C, D gegen den Uhrzeigersinn</b>. Die Seite a ist AB, b ist BC, c ist CD, d ist DA.<br>1 cm = 10 mm = 2 Kästchen.',
+  tasks: [R6('6a', 'Zum Parallelogramm ergänzen', 'Wo liegt D?', [() => itPgramD(false)], 5), R6('6b', 'Ecken, Seiten und Maße', 'A, B, C, D – und mm, cm, Kästchen', [itCorner], 8),
+    FT('6F', 'Rechteck und Parallelogramm 📷', 'Im Heft zeichnen – Foto senden', F_VIERECK)] };
+const ST7 = { id: '7', title: 'Punktsymmetrie', icon: '🔄', sub: 'Am Punkt Z spiegeln',
+  intro: '<b>Merke:</b> So spiegelst du A am Punkt Z: A\' liegt auf der Geraden durch A und Z, auf der anderen Seite, <b>genauso weit</b> von Z entfernt.<br><b>Kästchen-Trick:</b> Von A nach Z: 3 nach rechts, 2 nach unten. Von Z nach A\' noch einmal: 3 nach rechts, 2 nach unten.<br>Eine Figur ist <b>punktsymmetrisch</b>, wenn sie nach einer <b>halben Drehung</b> wieder genau gleich aussieht.',
+  tasks: [R6('7a', 'Richtig gespiegelt?', 'Prüfe P und P\'.', [itPointCheck], 6), R6('7b', 'Figuren am Punkt spiegeln', 'Tippe die Bildpunkte an.', [() => itPointFig(false)], 4), R6('7c', 'Punktsymmetrisch?', 'Figuren und Buchstaben', [itIsPS], 8),
+    FT('7F', 'Viereck am Punkt spiegeln 📷', 'Im Heft zeichnen – Foto senden', F_PUNKT)] };
+const ST8 = { id: 'K', title: 'Knobeln', icon: '🧩', sub: 'Spiegelschrift und Rätsel (Bonus)',
+  intro: 'Bonus-Aufgaben aus den Wahlstationen: Spiegelschrift, Quadrate zählen, Symmetrie-Profi.',
+  tasks: [R6('Ka', 'Spiegelschrift', 'Sieht das Wort gespiegelt gleich aus?', [itWord], 6), R6('Kb', 'Knobelfragen', 'Für Profis', [itKnobel], 6)] };
+const EXAM_GENS = [itOrthoCheck, () => itTapLine(false), itMirrorCheck, () => itMirrorFig(true), itAxes, itLetter, itRelation, () => itTapLine(true), () => itNames(true), itWF, () => itPgramD(true), itPointCheck, () => itPointFig(true), itIsPS];
+const ST9 = { id: 'T', title: 'Geometrie-Test', icon: '🏆', sub: '12 gemischte Aufgaben – bis zu 3 Sterne',
+  intro: 'Teste dich: <b>12 Aufgaben</b> aus allen Geometrie-Stationen. Du hast bei jeder Aufgabe nur <b>einen Versuch</b>. Am Ende siehst du, was du noch üben solltest.',
+  tasks: [{ id: 'T', stars: 3, title: 'Geometrie-Test starten', sub: '7 richtig = ⭐ · 9 richtig = ⭐⭐ · 11 richtig = ⭐⭐⭐', run(h) { const order = shuffle(EXAM_GENS).slice(0, 12); runRound(h, findTask('T'), { exam: true, n: 12, make: i => order[i]() }); } }] };
+
+/* ---------- Start ---------- */
+const STATIONS = [ST1, ST2, ST3, ST4, ST5, ST6, ST7, ST8, ST9];
+$('#brand').addEventListener('click', () => { if (ST) showHome(); });
+$('#logout').addEventListener('click', () => { if (ST) { saveLocal(); sync(); } showLogin(); });
+showLogin();
+</script>
+</body>
+</html>
