@@ -200,6 +200,10 @@ ol.instr{margin:.35rem 0 0;padding-left:1.4rem;display:grid;gap:.4rem}
 .ghostrot{opacity:.55;transition:transform 1.4s ease;transform-box:view-box}
 .ghostrot.go{transform:rotate(180deg)}
 .ghostrot text,.ghostrot polygon,.ghostrot circle{fill:rgba(214,51,108,.35)!important;stroke:#d6336c!important}
+.ghostrot .glyph{stroke:rgba(214,51,108,.55)!important}
+.board .glyph{fill:none;stroke:#1c6fd1;stroke-linecap:round;stroke-linejoin:round}
+.wordsvg{height:3.4rem;width:auto;display:block}
+.wordsvg .glyph{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
 .chk{display:flex;gap:.55rem;align-items:flex-start;padding:.3rem 0;cursor:pointer}
 .chk input{width:22px;height:22px;flex:none;margin-top:.15rem;accent-color:var(--acc)}
 /* Zeichnen */
@@ -956,9 +960,52 @@ function itAxes() {
 }
 const LET = { A: 's', M: 's', T: 's', U: 's', V: 's', W: 's', Y: 's', B: 'w', C: 'w', D: 'w', E: 'w', K: 'w', H: 'b', I: 'b', O: 'b', X: 'b', F: 'n', G: 'n', L: 'n', N: 'n', P: 'n', R: 'n', S: 'n', Z: 'n' };
 const LETPS = { H: 1, I: 1, N: 1, O: 1, S: 1, X: 1, Z: 1 };
+/* Buchstaben als exakte Linien-Figuren (Blockschrift) – NICHT als Schrift-Font.
+   Fonts (Arial usw.) sind oft nicht genau symmetrisch (z. B. K, B, E, S).
+   Jede Figur: Breite w, Höhe 100, Mitte bei (w/2, 50). */
+const GLYPH = {
+  A: [64, 'M0,100 L32,0 L64,100 M12.2,62 H51.8'],
+  B: [58, 'M0,0 V100 M0,0 H33 A25,25 0 0 1 33,50 H0 M0,50 H33 A25,25 0 0 1 33,100 H0'],
+  C: [90, 'M79.47,17.86 A45,50 0 1 0 79.47,82.14'],
+  D: [70, 'M0,0 H25 A45,50 0 0 1 25,100 H0 Z'],
+  E: [58, 'M58,0 H0 V100 H58 M0,50 H48'],
+  F: [58, 'M58,0 H0 V100 M0,50 H48'],
+  G: [90, 'M79.47,17.86 A45,50 0 1 0 90,50 H55'],
+  H: [58, 'M0,0 V100 M58,0 V100 M0,50 H58'],
+  I: [40, 'M20,0 V100 M4,0 H36 M4,100 H36'],
+  K: [58, 'M0,0 V100 M58,0 L0,50 L58,100'],
+  L: [52, 'M0,0 V100 H52'],
+  M: [72, 'M0,100 V0 L36,62 L72,0 V100'],
+  N: [58, 'M0,100 V0 L58,100 V0'],
+  O: [80, 'M0,50 A40,50 0 1 0 80,50 A40,50 0 1 0 0,50 Z'],
+  P: [58, 'M0,100 V0 H33 A25,25 0 0 1 33,50 H0'],
+  R: [58, 'M0,100 V0 H33 A25,25 0 0 1 33,50 H0 M30,50 L58,100'],
+  S: [60, 'M51.65,12.5 A25,25 0 1 0 30,50 A25,25 0 1 1 8.35,87.5'],
+  T: [64, 'M0,0 H64 M32,0 V100'],
+  U: [60, 'M0,0 V60 A30,40 0 0 0 60,60 V0'],
+  V: [64, 'M0,0 L32,100 L64,0'],
+  W: [80, 'M0,0 L18,100 L40,30 L62,100 L80,0'],
+  X: [60, 'M0,0 L60,100 M60,0 L0,100'],
+  Y: [64, 'M0,0 L32,48 L64,0 M32,48 V100'],
+  Z: [58, 'M0,0 H58 L0,100 H58']
+};
+const GLW = 13;   /* Strichstärke in Glyph-Einheiten */
+function glyph(parent, ch, x, y, sc) {
+  const [w, d] = GLYPH[ch];
+  const g = S('g', { transform: `translate(${x - sc * w / 2} ${y - sc * 50}) scale(${sc})` }, parent);
+  S('path', { d, class: 'glyph', 'stroke-width': GLW }, g);
+  return g;
+}
+/* ganzes Wort als SVG (für Spiegel-Aufgaben) */
+function wordSvg(w) {
+  const gap = 26, pad = 14, ws = [...w].map(c => GLYPH[c][0]), W = ws.reduce((a, b) => a + b, 0) + gap * (w.length - 1) + 2 * pad;
+  const svg = S('svg', { viewBox: `0 0 ${W} ${100 + 2 * pad}`, class: 'wordsvg' });
+  let x = pad; [...w].forEach((c, i) => { glyph(svg, c, x + ws[i] / 2, 50 + pad, 1); x += ws[i] + gap; });
+  return svg;
+}
 function letterBoard(host, ch) {
   const svg = S('svg', { viewBox: '0 0 300 300', class: 'board plainb' }); host.append(svg);
-  const g = S('g', { class: 'letg' }, svg); const t = S('text', { x: 150, y: 150 + .358 * 220, 'text-anchor': 'middle', class: 'letter' }, g); t.textContent = ch;
+  const g = S('g', { class: 'letg' }, svg); glyph(g, ch, 150, 150, 2);
   return { svg, g, axes(type) { const ax = S('g', {}, svg); if (type === 's' || type === 'b') S('line', { x1: 150, y1: 10, x2: 150, y2: 290, class: 'letax' }, ax); if (type === 'w' || type === 'b') S('line', { x1: 10, y1: 150, x2: 290, y2: 150, class: 'letax' }, ax); } };
 }
 function itLetter() {
@@ -1234,7 +1281,8 @@ function itWord() {
   return { st: 'Knobeln', again: itWord, sol: same ? 'Lösung: ja' : 'Lösung: nein',
     show(box, R) {
       const c = el('div', { class: 'narrow' }); box.append(c);
-      const wd = el('div', { class: 'word', html: `<span>${w}</span>` }), mir = el('div', { class: 'word mir ' + (axis === 'w' ? 'mw' : 'ms'), html: `<span>${w}</span>` }); mir.hidden = true;
+      const wd = el('div', { class: 'word' }), mir = el('div', { class: 'word mir ' + (axis === 'w' ? 'mw' : 'ms') }); mir.hidden = true;
+      [wd, mir].forEach(d => { const sp = el('span', { 'aria-label': w }); sp.append(wordSvg(w)); d.append(sp); });
       c.append(el('div', { class: 'box', html: T(`Das Wort wird an einer <b>${axis === 'w' ? 'waagrechten' : 'senkrechten'}</b> Spiegelachse gespiegelt.`) }), wd, mir);
       choose(c, 'Sieht das Wort nach dem Spiegeln <b>genauso</b> aus?', [{ t: 'Ja, genauso', ok: same }, { t: 'Nein, anders', ok: !same }], R, { keep: true, row: true,
         expl: axis === 'w' ? (same ? 'Alle Buchstaben haben eine waagrechte Symmetrieachse.' : 'Nicht alle Buchstaben haben eine waagrechte Symmetrieachse.') : (same ? 'Das Wort ist von vorn und hinten gleich, und alle Buchstaben haben eine senkrechte Achse.' : 'Bei einer senkrechten Achse muss das Wort von vorn und hinten gleich sein – und alle Buchstaben brauchen eine senkrechte Achse.'),
